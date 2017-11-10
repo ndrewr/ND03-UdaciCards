@@ -1,20 +1,14 @@
 import React from 'react'
-import { View, Platform, StatusBar } from 'react-native'
+import { Button, Text, TouchableOpacity, View, Platform } from 'react-native'
 import { createStore } from 'redux'
 import { Provider } from 'react-redux'
 import reducer from './reducers'
 import { StackNavigator } from 'react-navigation'
-// import { purple, white } from './utils/colors'
+import { purple, white } from './utils/colors'
 // import { FontAwesome, Ionicons } from '@expo/vector-icons'
-import { Constants } from 'expo'
+// import { Constants } from 'expo'
 
-function UdaciStatusBar ({backgroundColor = '#292477', ...props}) {
-  return (
-    <View style={{ backgroundColor, height: Constants.statusBarHeight }}>
-      <StatusBar translucent backgroundColor={backgroundColor} {...props} />
-    </View>
-  )
-}
+import UdaciStatusBar from './components/UdaciStatusBar'
 
 // const Tabs = TabNavigator({
 //   History: {
@@ -58,18 +52,29 @@ function UdaciStatusBar ({backgroundColor = '#292477', ...props}) {
 //   }
 // })
 
-const DummyScreen = (number = 0) => {
-  return () => <div>Screen {number}</div>
+const DummyScreen = (number) => {
+  return (props) => (
+    <View>
+      <Text>Screen {number}: {number ? 'Secondary' : 'Home'}</Text>
+      <TouchableOpacity
+        onPress={() => props.navigation.navigate(
+          number ? 'Home' : 'Secondary'
+        )}
+      >
+        <Text>press here</Text>
+      </TouchableOpacity>
+    </View>
+  )
 }
 
 const MainNavigator = StackNavigator({
   Home: {
-    // screen: Tabs,
-    screen: DummyScreen(1),
+    screen: DummyScreen(0),
+    // screen: () => <Text>Screen 1</Text>
   },
   Secondary: {
-    // screen: EntryDetail,
-    screen: DummyScreen(2),
+    screen: DummyScreen(1),
+    // screen: () => <Text>Screen 2</Text>,
     navigationOptions: {
       headerTintColor: white,
       headerStyle: {
@@ -79,10 +84,10 @@ const MainNavigator = StackNavigator({
   }
 })
 
-export default class App extends React.Component {
-  componentDidMount() {
-    setLocalNotification()
-  }
+export default class AppRoot extends React.Component {
+  // componentDidMount() {
+  //   setLocalNotification()
+  // }
   render() {
     return (
       <Provider store={createStore(reducer)}>
