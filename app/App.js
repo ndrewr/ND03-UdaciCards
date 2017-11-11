@@ -4,10 +4,11 @@ import { createStore } from 'redux'
 import { Provider } from 'react-redux'
 import reducer from './reducers'
 import { StackNavigator } from 'react-navigation'
-import { purple, white } from './utils/colors'
+import { orange, purple, white } from './utils/colors'
 // import { FontAwesome, Ionicons } from '@expo/vector-icons'
 // import { Constants } from 'expo'
 
+import HomeScreen from './screens/HomeScreen'
 import UdaciStatusBar from './components/UdaciStatusBar'
 
 // const Tabs = TabNavigator({
@@ -67,15 +68,31 @@ const DummyScreen = (number) => {
   )
 }
 
+const DeckScreen = ({ navigation }) => {
+  return (
+    <View>
+      <Text>
+        DETAILS: {navigation.state.params.title}
+      </Text>
+    </View>
+  )
+}
+
 const MainNavigator = StackNavigator({
   Home: {
-    screen: DummyScreen(0),
-    // screen: () => <Text>Screen 1</Text>
-  },
-  Secondary: {
-    screen: DummyScreen(1),
-    // screen: () => <Text>Screen 2</Text>,
+    screen: HomeScreen,
     navigationOptions: {
+      headerTitle: 'UDACICARDS',
+      headerTintColor: white,
+      headerStyle: {
+        backgroundColor: orange,
+      }
+    }
+  },
+  DeckScreen: {
+    screen: DeckScreen,
+    navigationOptions: {
+      headerTitle: 'On deck!',
       headerTintColor: white,
       headerStyle: {
         backgroundColor: purple,
