@@ -1,19 +1,36 @@
-import ADD_DECK, RECEIVE_DECKS from './action_types'
+import * as actions from './action_types'
 
 import { getDecks } from '../utils/api'
 
-export function receiveDecks (decks) {
-  const decks = await getDecks()
+const receiveDecks = () => {
+// export function receiveDecks () {
+  // const decks = await getDecks()
 
-  return {
-    type: RECEIVE_DECKS,
-    decks,
+  // return {
+  //   type: actions.RECEIVE_DECKS,
+  //   decks,
+  // }
+
+  return async (dispatch) => {
+    const decks = await getDecks()
+
+    console.log('results from getDecks...', decks)
+
+    dispatch({
+      type: actions.RECEIVE_DECKS,
+      decks,
+    })
   }
 }
 
-export function addEntry (new_deck) {
+function addEntry (new_deck) {
   return {
-    type: ADD_DECK,
+    type: actions.ADD_DECK,
     deck: new_deck,
   }
+}
+
+export default {
+  receiveDecks,
+  addEntry
 }

@@ -8,14 +8,15 @@ const DECKLIST_STORAGE_KEY = 'udacicards:decklist'
 export function getDecks () {
   console.log('fetching decks!!!');
   return AsyncStorage.getItem(DECKLIST_STORAGE_KEY)
-    .then(results => {
-      const decks = results ? JSON.parse(results) : dummy_data
+    .then(async (results) => {
+      const decks = results ? await JSON.parse(results) : default_data
 
       console.log('deck results...', results, decks)
       // AsyncStorage.setItem(CALENDAR_STORAGE_KEY, JSON.stringify(dummyData))
 
       return decks
     })
+    .then(result => result)
 }
 
  // take in a single id argument and return the deck associated with that id.

@@ -2,6 +2,8 @@ import { createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
 import rootReducer from '../reducers';
 
+import deckActions from '../actions/decks'
+
 // import { AsyncStorage } from 'react-native'
 
 // import default_data from './default_data'
@@ -17,7 +19,10 @@ const configureStore = () => {
   // fetch initial data
   // store.dispatch(loadCategories());
   // store.dispatch(loadPosts());
-  store.dispatch(getDecks())
+  const result = deckActions.receiveDecks()
+
+  console.log('log: ', result)
+  store.dispatch(result)
 
   return store;
 };

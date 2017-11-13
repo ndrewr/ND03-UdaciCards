@@ -47,7 +47,7 @@ function HomeScreen (props) {
 
 const mapStateToProps = (state) => {
   return {
-    decks: state.decks
+    decks: state.decks ? Object.keys(state.decks).map(deck_name => state.decks[deck_name]) : null
   }
 }
 

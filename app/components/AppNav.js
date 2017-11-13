@@ -4,12 +4,12 @@ import { StackNavigator } from 'react-navigation'
 // import { Constants } from 'expo'
 // import { FontAwesome, Ionicons } from '@expo/vector-icons'
 
-import { orange, purple, white } from './utils/colors'
+import { orange, purple, white } from '../utils/colors'
 
-import DeckScreen from './screens/DeckScreen'
-import HomeScreen from './screens/HomeScreen'
+import DeckScreen from '../screens/DeckScreen'
+import HomeScreen from '../screens/HomeScreen'
 
-export default function MainNavigator = StackNavigator({
+export default StackNavigator({
   Home: {
     screen: HomeScreen,
     navigationOptions: {
