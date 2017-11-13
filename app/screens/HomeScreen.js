@@ -1,19 +1,22 @@
-import React from 'react'
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+
 import { Button, FlatList, Text, TouchableOpacity, View, Platform } from 'react-native'
 // import { purple, white } from './utils/colors'
 
-export default function HomeScreen (props) {
-  const decks = [
+function HomeScreen (props) {
+  const dummy_decks = [
     { title: 'list one' },
     { title: 'list two' },
     { title: 'list three' },
     { title: 'list four' },
     { title: 'list five' }
   ]
+  const decks = props.decks || dummy_decks
 
   const gotoDeck = (item) =>
     () =>
-        props.navigation.navigate(
+      props.navigation.navigate(
         'DeckScreen',
         { deck: item, title: item.title }
       )
@@ -30,8 +33,7 @@ export default function HomeScreen (props) {
     )
   }
 
-
-
+  // TODO: add "new deck" navigation button
   return (
     <View>
       <Text>Choose a deck, any deck!</Text>
@@ -42,3 +44,11 @@ export default function HomeScreen (props) {
     </View>
   )
 }
+
+const mapStateToProps = (state) => {
+  return {
+    decks: state.decks
+  }
+}
+
+export default connect(mapStateToProps)(HomeScreen)

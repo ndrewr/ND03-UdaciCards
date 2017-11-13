@@ -1,15 +1,37 @@
 import React from 'react'
-import { Button, Text, TouchableOpacity, View, Platform } from 'react-native'
+import { View, Platform } from 'react-native'
 import { createStore } from 'redux'
 import { Provider } from 'react-redux'
-import reducer from './reducers'
-import { StackNavigator } from 'react-navigation'
-import { orange, purple, white } from './utils/colors'
 // import { FontAwesome, Ionicons } from '@expo/vector-icons'
-// import { Constants } from 'expo'
 
+import reducer from './reducers'
+import { orange, purple, white } from './utils/colors'
+
+import DeckScreen from './screens/DeckScreen'
 import HomeScreen from './screens/HomeScreen'
+
+import AppNav from './components/AppNav'
 import UdaciStatusBar from './components/UdaciStatusBar'
+
+import configureStore from './utils/configureStore'
+
+export default class AppRoot extends React.Component {
+  // componentDidMount() {
+  //   setLocalNotification()
+  // }
+
+      // <Provider store={createStore(reducer)}>
+  render() {
+    return (
+      <Provider store={configureStore()}>
+        <View style={{flex: 1}}>
+          <UdaciStatusBar backgroundColor={purple} barStyle="light-content" />
+          <AppNav />
+        </View>
+      </Provider>
+    )
+  }
+}
 
 // const Tabs = TabNavigator({
 //   History: {
@@ -17,13 +39,6 @@ import UdaciStatusBar from './components/UdaciStatusBar'
 //     navigationOptions: {
 //       tabBarLabel: 'History',
 //       tabBarIcon: ({ tintColor }) => <Ionicons name='ios-bookmarks' size={30} color={tintColor} />
-//     },
-//   },
-//   AddEntry: {
-//     screen: AddEntry,
-//     navigationOptions: {
-//       tabBarLabel: 'Add Entry',
-//       tabBarIcon: ({ tintColor }) => <FontAwesome name='plus-square' size={30} color={tintColor} />
 //     },
 //   },
 //   Live: {
@@ -52,92 +67,3 @@ import UdaciStatusBar from './components/UdaciStatusBar'
 //     }
 //   }
 // })
-
-const DummyScreen = (number) => {
-  return (props) => (
-    <View>
-      <Text>Screen {number}: {number ? 'Secondary' : 'Home'}</Text>
-      <TouchableOpacity
-        onPress={() => props.navigation.navigate(
-          number ? 'Home' : 'Secondary'
-        )}
-      >
-        <Text>press here</Text>
-      </TouchableOpacity>
-    </View>
-  )
-}
-
-const DeckScreen = ({ navigation }) => {
-  return (
-    <View>
-      <Text>
-        DETAILS: {navigation.state.params.title}
-      </Text>
-    </View>
-  )
-}
-
-const MainNavigator = StackNavigator({
-  Home: {
-    screen: HomeScreen,
-    navigationOptions: {
-      headerTitle: 'UDACICARDS',
-      headerTintColor: white,
-      headerStyle: {
-        backgroundColor: orange,
-      }
-    }
-  },
-  DeckScreen: {
-    screen: DeckScreen,
-    navigationOptions: {
-      headerTitle: 'On deck!',
-      headerTintColor: white,
-      headerStyle: {
-        backgroundColor: purple,
-      }
-    }
-  }
-})
-
-export default class AppRoot extends React.Component {
-  // componentDidMount() {
-  //   setLocalNotification()
-  // }
-  render() {
-    return (
-      <Provider store={createStore(reducer)}>
-        <View style={{flex: 1}}>
-          <UdaciStatusBar backgroundColor={purple} barStyle="light-content" />
-          <MainNavigator />
-        </View>
-      </Provider>
-    )
-  }
-}
-
-
-// import React from 'react';
-// import { StyleSheet, Text, View } from 'react-native';
-
-// export default class App extends React.Component {
-//   render() {
-//     return (
-//       <View style={styles.container}>
-//         <Text>Open up App.js to start working on your app!</Text>
-//         <Text>Changes you make will automatically reload.</Text>
-//         <Text>Shake your phone to open the developer menu.</Text>
-//       </View>
-//     );
-//   }
-// }
-
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     backgroundColor: '#fff',
-//     alignItems: 'center',
-//     justifyContent: 'center',
-//   },
-// });

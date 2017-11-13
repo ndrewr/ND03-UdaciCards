@@ -1,40 +1,20 @@
 import { AsyncStorage } from 'react-native'
-// import { formatCalendarResults, CALENDAR_STORAGE_KEY } from './_calendar'
+
+import default_data from './default_data'
 
 const DECKLIST_STORAGE_KEY = 'udacicards:decklist'
-
-const dummy_data = {
-  React: {
-    title: 'React',
-    questions: [
-      {
-        question: 'What is React?',
-        answer: 'A library for managing user interfaces'
-      },
-      {
-        question: 'Where do you make Ajax requests in React?',
-        answer: 'The componentDidMount lifecycle event'
-      }
-    ]
-  },
-  JavaScript: {
-    title: 'JavaScript',
-    questions: [
-      {
-        question: 'What is a closure?',
-        answer: 'The combination of a function and the lexical environment within which that function was declared.'
-      }
-    ]
-  }
-}
 
 // return all of the decks along with their titles, questions, and answers.
 export function getDecks () {
   console.log('fetching decks!!!');
   return AsyncStorage.getItem(DECKLIST_STORAGE_KEY)
-    then(results => {
-      console.log('deck results...', results)
-      return JSON.parse(results)
+    .then(results => {
+      const decks = results ? JSON.parse(results) : dummy_data
+
+      console.log('deck results...', results, decks)
+      // AsyncStorage.setItem(CALENDAR_STORAGE_KEY, JSON.stringify(dummyData))
+
+      return decks
     })
 }
 
