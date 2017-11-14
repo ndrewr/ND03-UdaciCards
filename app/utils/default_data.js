@@ -48,5 +48,66 @@ export default default_data = {
         answer: 'As of ES2015 specification (also known as ES6) language support for a "class" keyword was added to the recognized syntax.'
       }
     ]
+  },
+  Numero: {
+    title: 'Numbers in Spanish!',
+    questions: [
+      {
+        question: 'one | 1',
+        answer: 'uno'
+      },
+      {
+        question: 'two | 2',
+        answer: 'dos'
+      },
+      {
+        question: 'three | 3',
+        answer: 'tres'
+      },
+      {
+        question: 'four | 4',
+        answer: 'quattro'
+      },
+      {
+        question: 'five | 5',
+        answer: 'cinco'
+      },
+      {
+        question: 'six | 6',
+        answer: 'seis'
+      },
+      {
+        question: 'seven | 7',
+        answer: 'siete'
+      },
+      {
+        question: 'eight | 8',
+        answer: 'ocho'
+      },
+      {
+        question: 'nine | 9',
+        answer: 'nueve'
+      },
+      {
+        question: 'ten | 10',
+        answer: 'diez'
+      }
+    ]
+  },
+  Animales: {
+    title: 'Animals in Spanish!',
+    questions: []
+  },
+  Fruits: {
+    title: 'Fruits in Japanese!',
+    questions: []
+  },
+  Pokemon: {
+    title: 'Identify this Pokemon',
+    questions: []
+  },
+  Trivia: {
+    title: 'Random Trivia for Fun!',
+    questions: []
   }
 }

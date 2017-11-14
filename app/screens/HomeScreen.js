@@ -1,8 +1,40 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { Button, FlatList, StyleSheet, Text, TouchableOpacity, View, Platform } from 'react-native'
 
-import { Button, FlatList, Text, TouchableOpacity, View, Platform } from 'react-native'
-// import { purple, white } from './utils/colors'
+import { gray, purple, white } from '../utils/colors'
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 10,
+  },
+  list_item: {
+    backgroundColor: white,
+    borderRadius: Platform.OS === 'ios' ? 16 : 2,
+    padding: 20,
+    marginLeft: 10,
+    marginRight: 10,
+    marginTop: 17,
+    justifyContent: 'center',
+    shadowRadius: 3,
+    shadowOpacity: 0.8,
+    shadowColor: 'rgba(0, 0, 0, 0.24)',
+    shadowOffset: {
+      width: 0,
+      height: 3
+    },
+  },
+  list_item_title: {
+    // width: 200,
+    fontSize: 20,
+    fontWeight: '600',
+  },
+  list_item_sub: {
+    fontSize: 16,
+    color: gray,
+  }
+})
 
 function HomeScreen (props) {
   const dummy_decks = [
@@ -25,9 +57,13 @@ function HomeScreen (props) {
     return (
       <TouchableOpacity
         onPress={gotoDeck(item)}
+        style={styles.list_item}
       >
-        <Text>
-          { item.title }
+        <Text style={styles.list_item_title}>
+          {item.title}
+        </Text>
+        <Text style={styles.list_item_sub}>
+          {`${item.questions ? item.questions.length : 0} questions`}
         </Text>
       </TouchableOpacity>
     )
@@ -35,7 +71,7 @@ function HomeScreen (props) {
 
   // TODO: add "new deck" navigation button
   return (
-    <View>
+    <View style={styles.container}>
       <Text>Choose a deck, any deck!</Text>
       <FlatList
         data={decks.map(item => ({...item, key: item.title}))}

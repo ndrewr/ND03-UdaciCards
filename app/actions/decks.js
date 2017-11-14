@@ -4,13 +4,6 @@ import { getDecks } from '../utils/api'
 
 const receiveDecks = () => {
 // export function receiveDecks () {
-  // const decks = await getDecks()
-
-  // return {
-  //   type: actions.RECEIVE_DECKS,
-  //   decks,
-  // }
-
   return async (dispatch) => {
     const decks = await getDecks()
 

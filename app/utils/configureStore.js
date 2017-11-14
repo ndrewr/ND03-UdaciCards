@@ -17,8 +17,6 @@ const configureStore = () => {
   const store = createStore(rootReducer, compose(applyMiddleware(thunk)));
 
   // fetch initial data
-  // store.dispatch(loadCategories());
-  // store.dispatch(loadPosts());
   const result = deckActions.receiveDecks()
 
   console.log('log: ', result)
