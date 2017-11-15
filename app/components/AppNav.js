@@ -6,10 +6,17 @@ import { StackNavigator } from 'react-navigation'
 
 import { blue, lightPurp, orange, purple, white } from '../utils/colors'
 
+import DeckCreatorScreen from '../screens/DeckCreatorScreen'
 import DeckScreen from '../screens/DeckScreen'
 import HomeScreen from '../screens/HomeScreen'
 
-const DeckCreatorScreen = () => <View><Text>New Deck!</Text></View>
+// const DeckCreatorScreen = () => (
+//   <View>
+//     <Text>
+//       New Deck!
+//     </Text>
+//   </View>
+// )
 
 const CreateDeckButton = ({ onPress }) => {
   const Touchable = Platform.OS === 'android' ? TouchableNativeFeedback : TouchableOpacity;

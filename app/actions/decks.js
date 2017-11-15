@@ -1,13 +1,12 @@
 import * as actions from './action_types'
 
-import { getDecks } from '../utils/api'
+import { getDecks, saveDeckTitle } from '../utils/api'
 
 const receiveDecks = () => {
-// export function receiveDecks () {
   return async (dispatch) => {
     const decks = await getDecks()
 
-    console.log('results from getDecks...', decks)
+    console.dir('results from getDecks...', decks)
 
     dispatch({
       type: actions.RECEIVE_DECKS,
@@ -16,14 +15,29 @@ const receiveDecks = () => {
   }
 }
 
-function addEntry (new_deck) {
-  return {
-    type: actions.ADD_DECK,
-    deck: new_deck,
+function createDeck (title) {
+  return async (dispatch) => {
+    try {
+      const result = await saveDeckTitle(title)
+
+      console.log('creating new deck...', result)
+
+      dispatch({
+        type: actions.ADD_DECK,
+        new_deck: {
+          title,
+          questions: []
+        }
+      })
+    }
+    catch (error) {
+      // set notifiation that save failed?
+      console.log('problem creating new deck...', error)
+    }
   }
 }
 
 export default {
   receiveDecks,
-  addEntry
+  createDeck
 }

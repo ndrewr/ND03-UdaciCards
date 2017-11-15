@@ -2,34 +2,52 @@ import { AsyncStorage } from 'react-native'
 
 import default_data from './default_data'
 
+import formatDeckTitle from './helpers'
+
 const DECKLIST_STORAGE_KEY = 'udacicards:decklist'
 
 // return all of the decks along with their titles, questions, and answers.
 export function getDecks () {
   console.log('fetching decks!!!');
   return AsyncStorage.getItem(DECKLIST_STORAGE_KEY)
-    .then(async (results) => {
-      const decks = results ? await JSON.parse(results) : default_data
+    .then((results) => {
+      const decks = results ? JSON.parse(results) : default_data
 
       console.log('deck results...', results, decks)
-      // AsyncStorage.setItem(CALENDAR_STORAGE_KEY, JSON.stringify(dummyData))
+
+      if (! results) {
+        console.log('initializing local storage...')
+        AsyncStorage.setItem(DECKLIST_STORAGE_KEY, JSON.stringify(decks))
+      }
 
       return decks
+      // return results ? JSON.parse(results) : default_data
     })
-    .then(result => result)
+    .then(result => {
+      // AsyncStorage.setItem(DECKLIST_STORAGE_KEY, JSON.stringify(result))
+      return result
+    })
 }
 
  // take in a single id argument and return the deck associated with that id.
 export function getDeck (deck_id) {
   console.log('fetching individual deck with ID...', deck_id);
-
-
 }
 
 // take in a single title argument and add it to the decks
 export function saveDeckTitle (title) {
   console.log('creating new deck with title...', title);
+  // create new deck object
+  // grab state from storage
+  // add the new item to storage; use mergeItem
+  // when the operation has succeeded, return the new object
 
+  const newDeck = { title, questions: [] }
+
+  const deck_key = formatDeckTitle(title)
+  // const deck_key = title
+
+  return AsyncStorage.mergeItem(DECKLIST_STORAGE_KEY, JSON.stringify({ [deck_key]: newDeck }))
 }
 
 // take in two arguments, title and card, and will add the card to the list of questions for the deck with the associated title.
