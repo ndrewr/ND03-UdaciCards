@@ -4,6 +4,38 @@ import { Button, FlatList, StyleSheet, Text, TouchableOpacity, View, Platform } 
 
 import { gray, purple, white } from '../utils/colors'
 
+function HomeScreen ({ decks, navigation }) {
+  const deck_list = Object.keys(decks).map(deck_key => ({ ...decks[deck_key], key: deck_key}))
+
+  const ListItem = ({item: deck}) => {
+    const gotoDeck = () => navigation.navigate('DeckScreen', { deck_key: deck.key })
+    // console.log('render this item: ', deck)
+    return (
+      <TouchableOpacity
+        onPress={gotoDeck}
+        style={styles.list_item}
+      >
+        <Text style={styles.list_item_title}>
+          {deck.title}
+        </Text>
+        <Text style={styles.list_item_sub}>
+          {`${deck.questions.length} questions`}
+        </Text>
+      </TouchableOpacity>
+    )
+  }
+
+  return (
+    <View style={styles.container}>
+      <Text>Choose a deck, any deck!</Text>
+      <FlatList
+        data={deck_list}
+        renderItem={ListItem}
+      />
+    </View>
+  )
+}
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -36,54 +68,10 @@ const styles = StyleSheet.create({
   }
 })
 
-function HomeScreen (props) {
-  const dummy_decks = [
-    { title: 'list one' },
-    { title: 'list two' },
-    { title: 'list three' },
-    { title: 'list four' },
-    { title: 'list five' }
-  ]
-  const decks = props.decks || dummy_decks
-
-  const gotoDeck = (item) =>
-    () =>
-      props.navigation.navigate(
-        'DeckScreen',
-        { deck: item, title: item.title }
-      )
-
-  const ListItem = ({ item }) => {
-    return (
-      <TouchableOpacity
-        onPress={gotoDeck(item)}
-        style={styles.list_item}
-      >
-        <Text style={styles.list_item_title}>
-          {item.title}
-        </Text>
-        <Text style={styles.list_item_sub}>
-          {`${item.questions ? item.questions.length : 0} questions`}
-        </Text>
-      </TouchableOpacity>
-    )
-  }
-
-  // TODO: add "new deck" navigation button
-  return (
-    <View style={styles.container}>
-      <Text>Choose a deck, any deck!</Text>
-      <FlatList
-        data={decks.map(item => ({...item, key: item.title}))}
-        renderItem={ListItem}
-      />
-    </View>
-  )
-}
-
 const mapStateToProps = (state) => {
   return {
-    decks: state.decks ? Object.keys(state.decks).map(deck_name => state.decks[deck_name]) : null
+    // decks: state.decks ? Object.keys(state.decks).map(deck_name => state.decks[deck_name]) : null
+    decks: state.decks
   }
 }
 

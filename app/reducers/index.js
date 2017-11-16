@@ -4,7 +4,7 @@ import * as actions from '../actions/action_types'
 
 import { formatDeckTitle } from '../utils/helpers'
 
-function entries (state = {}, action) {
+function entries (state = { decks: {} }, action) {
   console.log('REDUCER: ', action.type, action)
   switch (action.type) {
     case actions.RECEIVE_DECKS :

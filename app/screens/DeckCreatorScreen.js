@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Button, FlatList, Keyboard, StyleSheet, Text, TextInput, TouchableOpacity, View, Platform } from 'react-native'
 
@@ -6,7 +6,7 @@ import { createDeck } from '../actions/decks'
 
 // DETAILS: {navigation.state.params.title}
 
-class DeckCreatorScreen extends React.Component {
+class DeckCreatorScreen extends Component {
   state = {
     title_text: ''
   }
