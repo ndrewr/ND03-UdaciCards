@@ -2,7 +2,7 @@ import { AsyncStorage } from 'react-native'
 
 import default_data from './default_data'
 
-import formatDeckTitle from './helpers'
+import { formatDeckTitle } from './helpers'
 
 const DECKLIST_STORAGE_KEY = 'udacicards:decklist'
 
@@ -36,7 +36,6 @@ export function getDeck (deck_id) {
 
 // take in a single title argument and add it to the decks
 export function saveDeckTitle (title) {
-  console.log('creating new deck with title...', title);
   // create new deck object
   // grab state from storage
   // add the new item to storage; use mergeItem
@@ -46,6 +45,7 @@ export function saveDeckTitle (title) {
 
   const deck_key = formatDeckTitle(title)
   // const deck_key = title
+  console.log('creating new deck with title...', title, deck_key);
 
   return AsyncStorage.mergeItem(DECKLIST_STORAGE_KEY, JSON.stringify({ [deck_key]: newDeck }))
 }

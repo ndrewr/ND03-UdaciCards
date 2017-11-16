@@ -2,7 +2,7 @@ import * as actions from './action_types'
 
 import { getDecks, saveDeckTitle } from '../utils/api'
 
-const receiveDecks = () => {
+export function receiveDecks () {
   return async (dispatch) => {
     const decks = await getDecks()
 
@@ -15,12 +15,12 @@ const receiveDecks = () => {
   }
 }
 
-function createDeck (title) {
+export function createDeck (title) {
   return async (dispatch) => {
     try {
       const result = await saveDeckTitle(title)
 
-      console.log('creating new deck...', result)
+      console.log('ACTION: creating new deck...', result)
 
       dispatch({
         type: actions.ADD_DECK,
@@ -35,9 +35,4 @@ function createDeck (title) {
       console.log('problem creating new deck...', error)
     }
   }
-}
-
-export default {
-  receiveDecks,
-  createDeck
 }

@@ -2,9 +2,10 @@
 
 import * as actions from '../actions/action_types'
 
-// import formatDeckTitle from '../utils/helpers'
+import { formatDeckTitle } from '../utils/helpers'
 
 function entries (state = {}, action) {
+  console.log('REDUCER: ', action.type, action)
   switch (action.type) {
     case actions.RECEIVE_DECKS :
       return {
@@ -12,12 +13,13 @@ function entries (state = {}, action) {
       }
     case actions.ADD_DECK :
       const { new_deck } = action
-      // const deck_key = formatDeckTitle(new_deck.title)
-      const deck_key = new_deck.title
+      const deck_key = formatDeckTitle(new_deck.title)
 
       return {
-        [deck_key]: new_deck,
-        ...state
+        decks: {
+          [deck_key]: new_deck,
+          ...state.decks
+        }
       }
     default :
       return state

@@ -1,11 +1,12 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import { Button, FlatList, Keyboard, StyleSheet, Text, TextInput, TouchableOpacity, View, Platform } from 'react-native'
 
-import deckActions from '../actions/decks'
+import { createDeck } from '../actions/decks'
 
 // DETAILS: {navigation.state.params.title}
 
-export default class DeckCreatorScreen extends React.Component {
+class DeckCreatorScreen extends React.Component {
   state = {
     title_text: ''
   }
@@ -17,9 +18,11 @@ export default class DeckCreatorScreen extends React.Component {
   createDeck = () => {
     const { title_text } = this.state
 
-    console.log('create this deck with title...', this.state.title_text)
+    console.log('create deck validation...')
     if (title_text) {
-      deckActions.createDeck(title_text)
+      console.log('create this deck with title...', this.state.title_text)
+
+      this.props.createNewDeck(title_text)
 
       Keyboard.dismiss()
       this.props.navigation.navigate('Home')
@@ -91,3 +94,10 @@ const styles = StyleSheet.create({
     }
   }),
 });
+
+const mapDispatchToProps = dispatch => ({
+  createNewDeck: new_deck => dispatch(createDeck(new_deck)),
+})
+
+export default connect(null, mapDispatchToProps)(DeckCreatorScreen)
+
