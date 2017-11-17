@@ -4,8 +4,6 @@ import { Button, FlatList, Keyboard, StyleSheet, Text, TextInput, TouchableOpaci
 
 import { createDeck } from '../actions/decks'
 
-// DETAILS: {navigation.state.params.title}
-
 class DeckCreatorScreen extends Component {
   state = {
     title_text: ''
@@ -18,12 +16,9 @@ class DeckCreatorScreen extends Component {
   createDeck = () => {
     const { title_text } = this.state
 
-    console.log('create deck validation...')
+    // TODO: add better validation
     if (title_text) {
-      console.log('create this deck with title...', this.state.title_text)
-
       this.props.createNewDeck(title_text)
-
       Keyboard.dismiss()
       this.props.navigation.navigate('Home')
     }
@@ -100,4 +95,3 @@ const mapDispatchToProps = dispatch => ({
 })
 
 export default connect(null, mapDispatchToProps)(DeckCreatorScreen)
-

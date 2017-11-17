@@ -11,6 +11,7 @@ function entries (state = { decks: {} }, action) {
       return {
         decks: action.decks,
       }
+
     case actions.ADD_DECK :
       const { new_deck } = action
       const deck_key = formatDeckTitle(new_deck.title)
@@ -21,6 +22,10 @@ function entries (state = { decks: {} }, action) {
           ...state.decks
         }
       }
+
+    case actions.ADD_QUESTION :
+      return state
+
     default :
       return state
   }

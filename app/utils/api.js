@@ -52,7 +52,7 @@ export function saveDeckTitle (title) {
 
 // take in two arguments, title and card, and will add the card to the list of questions for the deck with the associated title.
 export function addCardToDeck (title, card) {
-  console.log('creating new card in deck with ID...', deck_id);
+  console.log('creating new card in deck with title...', title, card);
 }
 
 // export function fetchCalendarResults () {
