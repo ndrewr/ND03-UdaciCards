@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Button, FlatList, Keyboard, StyleSheet, Text, TextInput, TouchableOpacity, View, Platform } from 'react-native'
+import { Button, FlatList, Keyboard, KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View, Platform } from 'react-native'
 
 import { addQuestion } from '../actions/decks'
 
@@ -16,6 +16,11 @@ class AddQuestionScreen extends Component {
 
   updateAnswerText = (text) => {
     this.setState({ answer_text: text })
+  }
+
+  dismissKeyboard() {
+    console.log('blur!')
+    Keyboard.dismiss()
   }
 
   createQuestion = () => {
@@ -38,27 +43,35 @@ class AddQuestionScreen extends Component {
     const { deck_title } = this.props
 
     return (
-      <View style={styles.container}>
-        <Text style={styles.input_label}>
-          New question text:
-        </Text>
-        <TextInput
-          defaultValue="My new question..."
-          maxLength={120}
-          onChangeText={this.updateQuestionText}
-          style={styles.input}
-        />
-        <Text style={styles.input_label}>
-          Answer text:
-        </Text>
-        <TextInput
-          defaultValue="The answer..."
-          maxLength={300}
-          onChangeText={this.updateAnswerText}
-          style={styles.input}
-        />
+      <KeyboardAvoidingView behavior="padding" style={styles.container}>
+        <View style={styles.input_wrapper}>
+          <Text style={styles.input_label}>
+            Q:
+          </Text>
+          <TextInput
+            placeholder="My new question..."
+            placeholderTextColor="dimgray"
+            maxLength={120}
+            onBlur={this.dismissKeyboard}
+            onChangeText={this.updateQuestionText}
+            style={styles.input}
+          />
+        </View>
+        <View style={styles.input_wrapper}>
+          <Text style={styles.input_label}>
+            A:
+          </Text>
+          <TextInput
+            placeholder="The answer..."
+            placeholderTextColor="dimgray"
+            maxLength={300}
+            onBlur={this.dismissKeyboard}
+            onChangeText={this.updateAnswerText}
+            style={styles.input}
+          />
+        </View>
         <Text style={styles.submit_label}>
-          Add this question to "{deck_title}" deck?
+          Add to "{deck_title}" deck?
         </Text>
         <TouchableOpacity
           onPress={this.createQuestion}>
@@ -68,7 +81,7 @@ class AddQuestionScreen extends Component {
             </Text>
           </View>
         </TouchableOpacity>
-      </View>
+      </KeyboardAvoidingView>
     )
   }
 }
@@ -77,16 +90,23 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
+    paddingTop: 10,
+  },
+  input_wrapper: {
+    flexDirection: 'row',
+    marginBottom: 20,
+    marginTop: 20,
   },
   input_label: {
     fontSize: 20,
     fontWeight: '600',
-    marginTop: 20,
-    marginBottom: 10,
+    marginRight: 10,
   },
   input: {
     fontSize: 16,
     fontWeight: '300',
+    paddingBottom: 4,
+    flex: 1,
   },
   submit_label: {
     margin: 20,
@@ -112,7 +132,7 @@ const styles = StyleSheet.create({
       fontSize: 18,
     },
     android: {
-      color: 'black',
+      color: 'white',
       textAlign: 'center',
       padding: 8,
       fontWeight: '500',
