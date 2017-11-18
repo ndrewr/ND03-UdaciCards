@@ -38,7 +38,7 @@ export default StackNavigator({
     screen: DeckScreen,
     navigationOptions: ({ navigation }) => {
       const onPress = () => {
-        console.log('navigate to question creator!', navigation.state.params) // how to know which deck we are viewing? do we have deck_key n scope?
+        // console.log('navigate to question creator!', navigation.state.params)
         navigation.navigate(
           'AddQuestion',
           {
@@ -56,13 +56,6 @@ export default StackNavigator({
         headerRight: <HeaderCreateButton onPress={onPress} />,
       }
     },
-    // navigationOptions: {
-    //   headerTitle: 'On deck!',
-    //   headerTintColor: white,
-    //   headerStyle: {
-    //     backgroundColor: purple,
-    //   }
-    // }
   },
   CreateDeck: {
     screen: DeckCreatorScreen,

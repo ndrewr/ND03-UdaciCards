@@ -14,17 +14,30 @@ function entries (state = { decks: {} }, action) {
 
     case actions.ADD_DECK :
       const { new_deck } = action
-      const deck_key = formatDeckTitle(new_deck.title)
 
       return {
         decks: {
-          [deck_key]: new_deck,
+          [formatDeckTitle(new_deck.title)]: new_deck,
           ...state.decks
         }
       }
 
     case actions.ADD_QUESTION :
-      return state
+      const { target_deck: { title, card } } = action
+      const deck_key = formatDeckTitle(title)
+      const decks = state.decks
+      const current_questions = decks[deck_key].questions
+      const updated_deck = {
+        title,
+        questions: [...current_questions, card]
+      }
+
+      return {
+        decks: {
+          ...decks,
+          [deck_key]: updated_deck
+        }
+      }
 
     default :
       return state

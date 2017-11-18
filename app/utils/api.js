@@ -13,7 +13,7 @@ export function getDecks () {
     .then((results) => {
       const decks = results ? JSON.parse(results) : default_data
 
-      console.log('deck results...', results, decks)
+      // console.log('deck results...', results, decks)
 
       if (! results) {
         console.log('initializing local storage...')
@@ -51,8 +51,17 @@ export function saveDeckTitle (title) {
 }
 
 // take in two arguments, title and card, and will add the card to the list of questions for the deck with the associated title.
-export function addCardToDeck (title, card) {
+export async function addCardToDeck (title, card) {
   console.log('creating new card in deck with title...', title, card);
+
+  // fetch current deck? try/catch
+  const decks = await getDecks()
+
+  const deck_key = formatDeckTitle(title)
+  const target_deck = decks[deck_key]
+  const updated_deck = { questions: [...target_deck.questions, card] } // dont think I need to include "title" key here
+
+  return AsyncStorage.mergeItem(DECKLIST_STORAGE_KEY, JSON.stringify({ [deck_key]: updated_deck }))
 }
 
 // export function fetchCalendarResults () {

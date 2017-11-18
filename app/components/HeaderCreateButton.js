@@ -1,7 +1,5 @@
 import React from 'react'
 import { Button, Text, TouchableNativeFeedback, TouchableOpacity, View, Platform } from 'react-native'
-// import { Constants } from 'expo'
-// import { FontAwesome, Ionicons } from '@expo/vector-icons'
 
 import { blue, lightPurp, orange, purple, white } from '../utils/colors'
 

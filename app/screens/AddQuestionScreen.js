@@ -10,8 +10,12 @@ class AddQuestionScreen extends Component {
     answer_text: '',
   }
 
-  updateText = (text) => {
-    this.setState({question_text: text})
+  updateQuestionText = (text) => {
+    this.setState({ question_text: text })
+  }
+
+  updateAnswerText = (text) => {
+    this.setState({ answer_text: text })
   }
 
   createQuestion = () => {
@@ -19,10 +23,9 @@ class AddQuestionScreen extends Component {
     const { answer_text, question_text } = this.state
 
     console.log('create question validation...')
-    if (question_text) {
+    if (question_text && answer_text) {
       console.log('create this question with text...', this.state.question_text)
 
-      // this.props.createNewDeck(question_text)
       this.props.addNewQuestion(deck_title, answer_text, question_text)
 
       Keyboard.dismiss()
@@ -36,23 +39,25 @@ class AddQuestionScreen extends Component {
 
     return (
       <View style={styles.container}>
-        <Text>
-          Enter the question text:
+        <Text style={styles.input_label}>
+          New question text:
         </Text>
         <TextInput
           defaultValue="My new question..."
           maxLength={120}
-          onChangeText={this.updateText}
+          onChangeText={this.updateQuestionText}
+          style={styles.input}
         />
-        <Text>
-          Enter the answer text:
+        <Text style={styles.input_label}>
+          Answer text:
         </Text>
         <TextInput
           defaultValue="The answer..."
           maxLength={300}
-          onChangeText={this.updateText}
+          onChangeText={this.updateAnswerText}
+          style={styles.input}
         />
-        <Text>
+        <Text style={styles.submit_label}>
           Add this question to "{deck_title}" deck?
         </Text>
         <TouchableOpacity
@@ -71,7 +76,23 @@ class AddQuestionScreen extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 15,
+    padding: 20,
+  },
+  input_label: {
+    fontSize: 20,
+    fontWeight: '600',
+    marginTop: 20,
+    marginBottom: 10,
+  },
+  input: {
+    fontSize: 16,
+    fontWeight: '300',
+  },
+  submit_label: {
+    margin: 20,
+    textAlign: 'center',
+    fontSize: 16,
+    fontWeight: '500',
   },
   button: Platform.select({
     ios: {},
@@ -91,7 +112,7 @@ const styles = StyleSheet.create({
       fontSize: 18,
     },
     android: {
-      color: 'white',
+      color: 'black',
       textAlign: 'center',
       padding: 8,
       fontWeight: '500',
@@ -123,8 +144,7 @@ const mapStateToProps = (state, props) => {
 }
 
 const mapDispatchToProps = dispatch => ({
-  // createNewDeck: new_deck => dispatch(createDeck(new_deck)),
-  addNewQuestion: (deck_title, question_text, answer_text) => dispatch(addQuestion({ deck_title, answer_text, question_text })),
+  addNewQuestion: (deck_title, answer_text, question_text) => dispatch(addQuestion({ deck_title, answer_text, question_text })),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(AddQuestionScreen)
