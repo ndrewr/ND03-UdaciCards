@@ -12,7 +12,7 @@ import {
 
 import { Ionicons } from '@expo/vector-icons';
 
-class AccordionItem extends Component {
+class AccordionListItem extends Component {
   state = {
     open: false
   };
@@ -44,12 +44,9 @@ class AccordionItem extends Component {
   }
 }
 
-//  ☐ displays an option to start a quiz on this specific deck
-//  ☐ An option to add a new question to the deck
 class DeckScreen extends Component {
   render() {
     const { deck, deck_key, navigation } = this.props;
-    // const QuestionItem = ({ item: question }) => <AccordionItem question={question} />
 
     return (
       <View style={styles.container}>
@@ -63,7 +60,7 @@ class DeckScreen extends Component {
             key: index
           }))}
           renderItem={({ item: question }) => (
-            <AccordionItem question={question} />
+            <AccordionListItem question={question} />
           )}
           style={styles.list_container}
         />
@@ -71,7 +68,7 @@ class DeckScreen extends Component {
           onPress={() => navigation.navigate('QuizScreen', { deck_key })}
         >
           <View style={styles.button}>
-            <Text style={styles.text}>Quiz me.</Text>
+            <Text style={styles.text}>Ok Quiz me.</Text>
           </View>
         </TouchableOpacity>
       </View>
@@ -105,7 +102,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row'
   },
   icon_button: {
-    // padding: 5,
     marginRight: 10
   },
   list_container: {
@@ -115,14 +111,12 @@ const styles = StyleSheet.create({
     ios: {},
     android: {
       elevation: 4,
-      // Material design blue from https://material.google.com/style/color.html#color-color-palette
       backgroundColor: '#2196F3',
       borderRadius: 2
     }
   }),
   text: Platform.select({
     ios: {
-      // iOS blue from https://developer.apple.com/ios/human-interface-guidelines/visual-design/color/
       color: '#007AFF',
       textAlign: 'center',
       padding: 8,

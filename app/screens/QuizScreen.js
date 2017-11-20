@@ -21,6 +21,8 @@ import {
   white
 } from '../utils/colors';
 
+import TextButton from '../components/TextButton';
+
 // ☐ displays a card question
 //  ☐ an option to view the answer (flips the card)
 //  ☐ a "Correct" button
@@ -38,11 +40,10 @@ class QuizScreen extends Component {
           {`${deck.questions.length} questions`}
         </Text>
         <View style={styles.card} />
-        <TouchableOpacity onPress={() => console.log('help button toggled')}>
-          <View style={styles.button}>
-            <Text style={styles.text}>HELP!</Text>
-          </View>
-        </TouchableOpacity>
+        <TextButton
+          text="HELP!"
+          onPress={() => console.log('help button toggled')}
+        />
       </View>
     );
   }
@@ -82,36 +83,11 @@ const styles = StyleSheet.create({
     flexDirection: 'row'
   },
   icon_button: {
-    // padding: 5,
     marginRight: 10
   },
   list_container: {
     paddingBottom: 30
-  },
-  button: Platform.select({
-    ios: {},
-    android: {
-      elevation: 4,
-      // Material design blue from https://material.google.com/style/color.html#color-color-palette
-      backgroundColor: '#2196F3',
-      borderRadius: 2
-    }
-  }),
-  text: Platform.select({
-    ios: {
-      // iOS blue from https://developer.apple.com/ios/human-interface-guidelines/visual-design/color/
-      color: '#007AFF',
-      textAlign: 'center',
-      padding: 8,
-      fontSize: 18
-    },
-    android: {
-      color: 'white',
-      textAlign: 'center',
-      padding: 8,
-      fontWeight: '500'
-    }
-  })
+  }
 });
 
 const mapStateToProps = (state, props) => {
@@ -123,4 +99,4 @@ const mapStateToProps = (state, props) => {
   };
 };
 
-export default connect(mapStateToProps, null)(QuizScreen);
+export default connect(mapStateToProps)(QuizScreen);

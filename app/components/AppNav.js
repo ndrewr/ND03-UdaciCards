@@ -8,8 +8,6 @@ import {
   Platform
 } from 'react-native';
 import { StackNavigator } from 'react-navigation';
-// import { Constants } from 'expo'
-// import { FontAwesome, Ionicons } from '@expo/vector-icons'
 
 import {
   blue,
@@ -34,7 +32,6 @@ export default StackNavigator({
     screen: HomeScreen,
     navigationOptions: ({ navigation }) => {
       const onPress = () => {
-        console.log('navigate to Deck Creator!');
         navigation.navigate('CreateDeck');
       };
 
@@ -52,7 +49,6 @@ export default StackNavigator({
     screen: DeckScreen,
     navigationOptions: ({ navigation }) => {
       const onPress = () => {
-        // console.log('navigate to question creator!', navigation.state.params)
         navigation.navigate('AddQuestion', {
           deck_key: navigation.state.params.deck_key
         });
@@ -77,25 +73,6 @@ export default StackNavigator({
         backgroundColor: red
       }
     }
-    // navigationOptions: ({ navigation }) => {
-    //   const onPress = () => {
-    //     navigation.navigate(
-    //       'AddQuestion',
-    //       {
-    //         deck_key: navigation.state.params.deck_key
-    //       },
-    //     )
-    //   }
-
-    //   return {
-    //     headerTitle: 'Good luck!',
-    //     headerTintColor: white,
-    //     headerStyle: {
-    //       backgroundColor: red,
-    //     },
-    //     // headerRight: <HeaderCreateButton onPress={onPress} />,
-    //   }
-    // },
   },
   CreateDeck: {
     screen: DeckCreatorScreen,
