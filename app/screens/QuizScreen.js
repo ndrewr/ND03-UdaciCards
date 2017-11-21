@@ -21,8 +21,43 @@ import {
   white
 } from '../utils/colors';
 
+import Card from '../components/Card';
+
 import IconButton from '../components/IconButton';
 import TextButton from '../components/TextButton';
+
+class QuestionCard extends Component {
+  state = {
+    faceUp: false
+  };
+
+  flipCard = () => {
+    this.setState(state => ({ faceUp: !state.faceUp }));
+  };
+
+  render() {
+    const { question } = this.props;
+    const { faceUp } = this.state;
+
+    return (
+      <TouchableOpacity onPress={this.flipCard} style={styles.card}>
+        <View>
+          {faceUp ? (
+            <View style={styles.card_front}>
+              <Text>FRONT SIDE</Text>
+              <Text>{question.answer}</Text>
+            </View>
+          ) : (
+            <View style={styles.card_back}>
+              <Text>BACK SIDE</Text>
+              <Text>{question.question}</Text>
+            </View>
+          )}
+        </View>
+      </TouchableOpacity>
+    );
+  }
+}
 
 // ☐ displays a card question
 //  ☐ an option to view the answer (flips the card)
@@ -70,11 +105,13 @@ class QuizScreen extends Component {
   render() {
     const { deck, deck_key } = this.props;
     const { questionNumber } = this.state;
+    const currentQuestion = deck.questions[questionNumber];
 
+    // <QuestionCard question={currentQuestion} />
     const QuizView = () => {
       return (
         <View style={styles.container}>
-          <View style={styles.card} />
+          <Card question={currentQuestion} />
           <View
             style={{ flexDirection: 'row', justifyContent: 'space-around' }}
           >
@@ -82,13 +119,13 @@ class QuizScreen extends Component {
               onPress={this.onCorrect}
               icon="md-happy"
               size={36}
-              customStyles={{ backgroundColor: '#00E676' }}
+              customStyles={{ backgroundColor: '#45b718' }}
             />
             <IconButton
               onPress={this.onIncorrect}
               icon="md-sad"
               size={36}
-              customStyles={{ backgroundColor: '#D32F2F' }}
+              customStyles={{ backgroundColor: '#b73a18' }}
             />
           </View>
         </View>
@@ -122,11 +159,18 @@ const styles = StyleSheet.create({
   },
   card: {
     elevation: 4,
-    backgroundColor: '#2196F3',
+    backgroundColor: '#FFFFFF',
     borderRadius: 10,
+    borderWidth: 2,
+    borderColor: '#2196F3',
     flex: 1,
     height: 200,
-    margin: 20
+    margin: 20,
+    padding: 20
+  },
+  card_front: {
+    backgroundColor: '#FFFF8D',
+    flex: 1
   },
   header_text: {
     fontSize: 20,
