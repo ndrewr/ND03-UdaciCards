@@ -20,8 +20,6 @@ export default function IconButton({
   text = '',
   onPress
 }) {
-  // const Touchable =
-  //   Platform.OS === 'android' ? TouchableNativeFeedback : TouchableOpacity;
   const buttonStyles = disabled
     ? [styles.button, customStyles, styles.buttonDisabled]
     : [styles.button, customStyles];
@@ -32,8 +30,8 @@ export default function IconButton({
   return (
     <TouchableHighlight
       accessibilityComponentType="button"
-      onPress={onPress}
       style={buttonStyles}
+      onPress={onPress}
     >
       <View style={buttonStyles}>
         <Ionicons name={icon} size={size} style={styles.icon} />
@@ -46,7 +44,6 @@ export default function IconButton({
 const styles = StyleSheet.create({
   icon: {
     color: 'white',
-    // flex: 1,
     alignSelf: 'center'
   },
   button: Platform.select({
@@ -56,12 +53,9 @@ const styles = StyleSheet.create({
 
       padding: 5,
       borderRadius: 5,
-      // backgroundColor: '#00E676',
       flexDirection: 'row',
       justifyContent: 'center',
       alignItems: 'center'
-      // margin: 20,
-      // textAlign: 'center',
     },
     android: {
       width: 50,
@@ -69,12 +63,10 @@ const styles = StyleSheet.create({
       padding: 5,
       elevation: 4,
       backgroundColor: '#2196F3',
-      // backgroundColor: '#00E676',
       flexDirection: 'row',
       justifyContent: 'center',
       alignItems: 'center',
       borderRadius: 5
-      // textAlign: 'center',
     }
   }),
   text: Platform.select({

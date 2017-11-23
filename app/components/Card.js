@@ -1,8 +1,8 @@
 // based off example from codedaily.com | codedaily.io/screencasts/12/Create-a-Flip-Card-Animation-with-React-Native
+// combined w/ android bug fixes detailed at github.com/facebook/react-native/issues/1973#issuecomment-262059217
 
 import React, { Component } from 'react';
 import {
-  // AppRegistry,
   StyleSheet,
   Text,
   View,
@@ -17,6 +17,7 @@ export default class Card extends Component {
     this.animatedValue.addListener(({ value }) => {
       this.value = value;
     });
+
     this.frontInterpolate = this.animatedValue.interpolate({
       inputRange: [0, 180],
       outputRange: ['0deg', '180deg']
@@ -26,7 +27,7 @@ export default class Card extends Component {
       outputRange: ['180deg', '360deg']
     });
 
-    // from github.com/facebook/react-native/issues/1973#issuecomment-262059217
+    // should be Android platform only?
     this.backOpacity = this.animatedValue.interpolate({
       inputRange: [89, 90],
       outputRange: [0, 1]
@@ -37,19 +38,27 @@ export default class Card extends Component {
     });
   }
   flipCard() {
-    if (this.value >= 90) {
-      Animated.spring(this.animatedValue, {
-        toValue: 0,
-        friction: 8,
-        tension: 10
-      }).start();
-    } else {
-      Animated.spring(this.animatedValue, {
-        toValue: 180,
-        friction: 8,
-        tension: 10
-      }).start();
-    }
+    const animationSettings = {
+      friction: 8,
+      tension: 10
+    };
+
+    animationSettings.toValue = this.value >= 90 ? 0 : 180;
+    Animated.spring(this.animatedValue, animationSettings).start();
+
+    // if (this.value >= 90) {
+    //   Animated.spring(this.animatedValue, {
+    //     toValue: 0,
+    //     friction: 8,
+    //     tension: 10
+    //   }).start();
+    // } else {
+    //   Animated.spring(this.animatedValue, {
+    //     toValue: 180,
+    //     friction: 8,
+    //     tension: 10
+    //   }).start();
+    // }
   }
 
   render() {
@@ -63,22 +72,23 @@ export default class Card extends Component {
       transform: [{ rotateY: this.backInterpolate }],
       opacity: this.backOpacity
     };
+
     return (
       <TouchableOpacity
         onPress={() => this.flipCard()}
         style={styles.container}
       >
-        <View style={styles.container}>
+        <View>
           <View>
             <Animated.View style={[styles.flipCard, frontAnimatedStyle]}>
-              <Text style={styles.flipText}>Q:</Text>
-              <Text style={styles.flipText}>{question.question}</Text>
+              <Text style={[styles.cardText, styles.cardHeading]}>Q:</Text>
+              <Text style={styles.cardText}>{question.question}</Text>
             </Animated.View>
             <Animated.View
-              style={[backAnimatedStyle, styles.flipCard, styles.flipCardBack]}
+              style={[styles.flipCard, backAnimatedStyle, styles.flipCardBack]}
             >
-              <Text style={styles.flipText}>A:</Text>
-              <Text style={styles.flipText}>{question.answer}</Text>
+              <Text style={[styles.cardText, styles.cardHeading]}>A:</Text>
+              <Text style={styles.cardText}>{question.answer}</Text>
             </Animated.View>
           </View>
         </View>
@@ -98,22 +108,23 @@ const styles = StyleSheet.create({
     height: 280,
     alignItems: 'center',
     justifyContent: 'center',
-    // backgroundColor: 'blue',
     backgroundColor: '#b71845',
-    backfaceVisibility: 'hidden'
+    backfaceVisibility: 'hidden',
+    borderRadius: 10
   },
   flipCardBack: {
-    // backgroundColor: "red",
     backgroundColor: '#1895b7',
     position: 'absolute',
     top: 0
   },
-  flipText: {
+  cardText: {
     width: 180,
     fontSize: 20,
     color: 'white',
     fontWeight: '400'
+  },
+  cardHeading: {
+    fontSize: 24,
+    fontWeight: 'bold'
   }
 });
-
-// AppRegistry.registerComponent('animatedbasic', () => animatedbasic);

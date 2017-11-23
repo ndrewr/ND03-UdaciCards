@@ -12,6 +12,9 @@ import {
 import { Ionicons } from '@expo/vector-icons';
 
 import {
+  alarm,
+  success,
+  info,
   blue,
   lightPurp,
   orange,
@@ -21,49 +24,10 @@ import {
   white
 } from '../utils/colors';
 
-import Card from '../components/Card';
-
 import IconButton from '../components/IconButton';
 import TextButton from '../components/TextButton';
+import QuestionCard from '../components/Card';
 
-class QuestionCard extends Component {
-  state = {
-    faceUp: false
-  };
-
-  flipCard = () => {
-    this.setState(state => ({ faceUp: !state.faceUp }));
-  };
-
-  render() {
-    const { question } = this.props;
-    const { faceUp } = this.state;
-
-    return (
-      <TouchableOpacity onPress={this.flipCard} style={styles.card}>
-        <View>
-          {faceUp ? (
-            <View style={styles.card_front}>
-              <Text>FRONT SIDE</Text>
-              <Text>{question.answer}</Text>
-            </View>
-          ) : (
-            <View style={styles.card_back}>
-              <Text>BACK SIDE</Text>
-              <Text>{question.question}</Text>
-            </View>
-          )}
-        </View>
-      </TouchableOpacity>
-    );
-  }
-}
-
-// ☐ displays a card question
-//  ☐ an option to view the answer (flips the card)
-//  ☐ a "Correct" button
-//  ☐ an "Incorrect" button
-//  ☐ the number of cards left in the quiz
 //  ☐ Displays the percentage correct once the quiz is complete
 class QuizScreen extends Component {
   state = {
@@ -76,8 +40,7 @@ class QuizScreen extends Component {
     const { deck, deck_key } = this.props;
     const { questionNumber } = this.state;
 
-    console.log('CORRECT!');
-    if (deck.questions.length > questionNumber) {
+    if (questionNumber < deck.questions.length) {
       this.setState(state => ({
         correctCount: state.correctCount + 1,
         questionNumber: state.questionNumber + 1
@@ -91,8 +54,7 @@ class QuizScreen extends Component {
     const { deck, deck_key } = this.props;
     const { questionNumber } = this.state;
 
-    console.log('IN-CORRECT!');
-    if (deck.questions.length > questionNumber) {
+    if (questionNumber < deck.questions.length) {
       this.setState(state => ({
         incorrectCount: state.incorrectCount + 1,
         questionNumber: state.questionNumber + 1
@@ -104,14 +66,16 @@ class QuizScreen extends Component {
 
   render() {
     const { deck, deck_key } = this.props;
-    const { questionNumber } = this.state;
-    const currentQuestion = deck.questions[questionNumber];
+    const { correctCount, incorrectCount, questionNumber } = this.state;
+    const currentQuestion = deck.questions[questionNumber - 1];
 
-    // <QuestionCard question={currentQuestion} />
     const QuizView = () => {
       return (
         <View style={styles.container}>
-          <Card question={currentQuestion} />
+          <Text style={styles.header_sub}>
+            Question {questionNumber} of {`${deck.questions.length}`}
+          </Text>
+          <QuestionCard question={currentQuestion} />
           <View
             style={{ flexDirection: 'row', justifyContent: 'space-around' }}
           >
@@ -119,12 +83,14 @@ class QuizScreen extends Component {
               onPress={this.onCorrect}
               icon="md-happy"
               size={36}
+              name="correct"
               customStyles={{ backgroundColor: '#45b718' }}
             />
             <IconButton
               onPress={this.onIncorrect}
               icon="md-sad"
               size={36}
+              name="incorrect"
               customStyles={{ backgroundColor: '#b73a18' }}
             />
           </View>
@@ -132,21 +98,33 @@ class QuizScreen extends Component {
       );
     };
 
-    const ReportView = () => {
+    const ReportView = ({ correctCount, incorrectCount }) => {
       return (
-        <View>
-          <Text>Finished!</Text>
+        <View style={styles.container}>
+          <Text style={styles.header_text}>Done! Your results...</Text>
+          <Text style={[styles.report_header, { backgroundColor: success }]}>
+            Correct: {correctCount}
+          </Text>
+          <Text style={[styles.report_header, { backgroundColor: alarm }]}>
+            Incorrect: {incorrectCount}
+          </Text>
+          <Text style={styles.report_final_score}>The Bottom-Line:</Text>
+          <Text style={styles.score_percect}>
+            {Math.floor(correctCount / (correctCount + incorrectCount) * 100)} %
+            success
+          </Text>
         </View>
       );
     };
 
     return (
       <View style={styles.container}>
-        <Text style={styles.header_text}>Now practicing... {deck.title}</Text>
-        <Text style={styles.header_sub}>
-          Question {questionNumber} of {`${deck.questions.length}`}
-        </Text>
-        {questionNumber < deck.questions.length ? <QuizView /> : <ReportView />}
+        <Text style={styles.header_text}>Practicing... {deck.title}</Text>
+        {correctCount + incorrectCount < deck.questions.length ? (
+          <QuizView />
+        ) : (
+          <ReportView {...this.state} />
+        )}
       </View>
     );
   }
@@ -157,46 +135,31 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 15
   },
-  card: {
-    elevation: 4,
-    backgroundColor: '#FFFFFF',
-    borderRadius: 10,
-    borderWidth: 2,
-    borderColor: '#2196F3',
-    flex: 1,
-    height: 200,
-    margin: 20,
-    padding: 20
-  },
-  card_front: {
-    backgroundColor: '#FFFF8D',
-    flex: 1
-  },
   header_text: {
     fontSize: 20,
-    fontWeight: '600'
-  },
-  header_sub: {
-    fontSize: 16,
+    fontWeight: '600',
     marginBottom: 10
   },
-  question_text: {
-    fontSize: 18
+  header_sub: {
+    fontSize: 16
   },
-  answer_text: {
-    fontSize: 16,
-    fontStyle: 'italic',
-    marginLeft: 20
+  report_header: {
+    fontSize: 28,
+    padding: 20,
+    color: 'white',
+    fontWeight: 'bold'
   },
-  accordion_row: {
-    flex: 1,
-    flexDirection: 'row'
+  report_final_score: {
+    fontSize: 22,
+    paddingTop: 20,
+    marginTop: 20,
+    borderBottomColor: info,
+    borderBottomWidth: 4
   },
-  icon_button: {
-    marginRight: 10
-  },
-  list_container: {
-    paddingBottom: 30
+  score_percect: {
+    marginTop: 10,
+    fontSize: 30,
+    fontWeight: '300'
   }
 });
 
