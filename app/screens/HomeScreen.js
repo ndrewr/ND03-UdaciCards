@@ -1,78 +1,183 @@
-import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import { Button, FlatList, StyleSheet, Text, TouchableOpacity, View, Platform } from 'react-native'
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import {
+  Button,
+  FlatList,
+  StyleSheet,
+  Switch,
+  Text,
+  TouchableOpacity,
+  View,
+  Platform
+} from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 
-import { gray, purple, white } from '../utils/colors'
+import { alarm, gray, purple, white } from '../utils/colors';
 
-function HomeScreen ({ decks, navigation }) {
-  const deck_list = Object.keys(decks).map(deck_key => ({ ...decks[deck_key], key: deck_key}))
+import { removeDeck } from '../actions/decks';
 
-  const ListItem = ({item: deck}) => {
-    const gotoDeck = () => navigation.navigate('DeckScreen', { deck_key: deck.key })
-    // console.log('render this item: ', deck)
+class ListEditItem extends Component {
+  state = {
+    confirmed: false
+  };
+
+  removeDeck = () => {
+    const { deck, onPress } = this.props;
+    const { confirmed } = this.state;
+    console.log('deleting this deck...', deck.title);
+
+    if (confirmed) {
+      // call delete dispatch
+      onPress(deck.title);
+    }
+
+    this.setState({ confirmed: true });
+  };
+
+  render() {
+    const { deck } = this.props;
+    const { confirmed } = this.state;
+
     return (
-      <TouchableOpacity
-        onPress={gotoDeck}
-        style={styles.list_item}
-      >
-        <Text style={styles.list_item_title}>
-          {deck.title}
-        </Text>
-        <Text style={styles.list_item_sub}>
-          {`${deck.questions.length} questions`}
-        </Text>
+      <TouchableOpacity onPress={this.removeDeck} style={styles.list_item}>
+        <View>
+          <Text style={styles.list_item_title}>{deck.title}</Text>
+          <Text style={styles.list_item_sub}>
+            {`${deck.questions.length} questions`}
+          </Text>
+        </View>
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'flex-end'
+          }}
+        >
+          {confirmed && (
+            <Text style={{ color: alarm, fontSize: 16, marginRight: 4 }}>
+              delete?
+            </Text>
+          )}
+          <Ionicons
+            name="md-remove-circle"
+            size={32}
+            style={{ color: alarm }}
+          />
+        </View>
       </TouchableOpacity>
-    )
+    );
   }
+}
 
-  return (
-    <View style={styles.container}>
-      <Text>Choose a deck, any deck!</Text>
-      <FlatList
-        data={deck_list}
-        renderItem={ListItem}
-      />
-    </View>
-  )
+// function HomeScreen ({ decks, navigation }) {
+class HomeScreen extends Component {
+  state = {
+    editMode: false
+  };
+
+  toggleEditMode = () => {
+    this.setState(state => ({ editMode: !state.editMode }));
+  };
+
+  render() {
+    const { decks, navigation, deleteDeck } = this.props;
+    const { editMode } = this.state;
+
+    const deck_list = Object.keys(decks).map(deck_key => ({
+      ...decks[deck_key],
+      key: deck_key
+    }));
+
+    const ListNavItem = ({ item: deck }) => {
+      const gotoDeck = () =>
+        navigation.navigate('DeckScreen', { deck_key: deck.key });
+      // const removeDeck = () => console.log('deleting this deck...', deck.title)
+
+      return (
+        <TouchableOpacity onPress={gotoDeck} style={styles.list_item}>
+          <View>
+            <Text style={styles.list_item_title}>{deck.title}</Text>
+            <Text style={styles.list_item_sub}>
+              {`${deck.questions.length} questions`}
+            </Text>
+          </View>
+        </TouchableOpacity>
+      );
+    };
+
+    const ListItem = editMode
+      ? ({ item }) => <ListEditItem deck={item} onPress={deleteDeck} />
+      : ListNavItem;
+
+    return (
+      <View style={styles.container}>
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            alignItems: 'center'
+          }}
+        >
+          <Text>Choose a deck, any deck!</Text>
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'flex-end',
+              alignItems: 'center'
+            }}
+          >
+            <Text>Edit list</Text>
+            <Switch onValueChange={this.toggleEditMode} value={editMode} />
+          </View>
+        </View>
+        {editMode && <Text>Now editing list...</Text>}
+        <FlatList data={deck_list} renderItem={ListItem} />
+      </View>
+    );
+  }
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 10,
+    padding: 10
   },
   list_item: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
     backgroundColor: white,
     borderRadius: Platform.OS === 'ios' ? 16 : 2,
     padding: 20,
     marginLeft: 10,
     marginRight: 10,
     marginTop: 17,
-    justifyContent: 'center',
     shadowRadius: 3,
     shadowOpacity: 0.8,
     shadowColor: 'rgba(0, 0, 0, 0.24)',
     shadowOffset: {
       width: 0,
       height: 3
-    },
+    }
   },
   list_item_title: {
-    // width: 200,
     fontSize: 20,
-    fontWeight: '600',
+    fontWeight: '600'
   },
   list_item_sub: {
     fontSize: 16,
-    color: gray,
+    color: gray
   }
-})
+});
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
-    // decks: state.decks ? Object.keys(state.decks).map(deck_name => state.decks[deck_name]) : null
     decks: state.decks
-  }
-}
+  };
+};
 
-export default connect(mapStateToProps)(HomeScreen)
+const mapDispatchToProps = dispatch => ({
+  deleteDeck: deck_title => dispatch(removeDeck(deck_title))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(HomeScreen);

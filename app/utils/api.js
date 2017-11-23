@@ -40,10 +40,23 @@ export async function getDeck(deck_id) {
   console.log('fetching individual deck with ID...', deck_id);
 
   try {
-    const decks = await getDecks(); // verify the results?s
+    const decks = await getDecks(); // verify the results?
     return decks[deck_id];
   } catch (e) {
     console.log('There was an error fetching the deck with id: ', deck_id, e);
+  }
+}
+
+export async function removeDeckByTitle(title) {
+  console.log('API: removing deck...', title);
+
+  try {
+    const decks = await getDecks(); // verify the results?
+    delete decks[formatDeckTitle(title)];
+
+    AsyncStorage.setItem(DECKLIST_STORAGE_KEY, JSON.stringify(decks));
+  } catch (e) {
+    console.log('There was an error removing the deck: ', title, e);
   }
 }
 

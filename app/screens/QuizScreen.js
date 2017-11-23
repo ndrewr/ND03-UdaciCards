@@ -28,7 +28,6 @@ import IconButton from '../components/IconButton';
 import TextButton from '../components/TextButton';
 import QuestionCard from '../components/Card';
 
-//  ☐ Displays the percentage correct once the quiz is complete
 class QuizScreen extends Component {
   state = {
     questionNumber: 1,
