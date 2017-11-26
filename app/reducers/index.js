@@ -6,6 +6,7 @@ import { formatDeckTitle } from '../utils/helpers';
 
 function entries(state = { decks: {} }, action) {
   console.log('REDUCER: ', action.type, action);
+
   switch (action.type) {
     case actions.RECEIVE_DECKS:
       return {
@@ -23,8 +24,8 @@ function entries(state = { decks: {} }, action) {
       };
 
     case actions.REMOVE_DECK:
-      const decks_copy = { ...state.decks };
-      const target_deck = decks_copy[formatDeckTitle(action.deck_title)];
+      let decks_copy = { ...state.decks };
+      let target_deck = decks_copy[formatDeckTitle(action.deck_title)];
 
       if (target_deck) {
         delete decks_copy[formatDeckTitle(action.deck_title)];
@@ -35,11 +36,11 @@ function entries(state = { decks: {} }, action) {
       };
 
     case actions.ADD_QUESTION:
-      const { target_deck: { title, card } } = action;
-      const deck_key = formatDeckTitle(title);
-      const decks = state.decks;
-      const current_questions = decks[deck_key].questions;
-      const updated_deck = {
+      let { target_deck: { title, card } } = action;
+      let deck_key = formatDeckTitle(title);
+      let decks = state.decks;
+      let current_questions = decks[deck_key].questions;
+      let updated_deck = {
         title,
         questions: [...current_questions, card]
       };
@@ -50,6 +51,39 @@ function entries(state = { decks: {} }, action) {
           [deck_key]: updated_deck
         }
       };
+
+    case actions.REMOVE_QUESTION:
+      let { deck_title, question_index } = action.target;
+      // let deck_key = formatDeckTitle(deck_title)
+      let deck = state.decks[formatDeckTitle(deck_title)];
+      // let updated_deck = {
+      //   ...deck,
+      //   questions: deck.questions.reduce((question_list, question, index) => {
+      //     if (index !== question_index) {
+      //       question_list.push(question)
+      //     }
+      //     return question_list
+      //   }, [])
+      // }
+
+      return {
+        decks: {
+          ...state.decks,
+          [formatDeckTitle(deck_title)]: {
+            ...deck,
+            questions: deck.questions.reduce(
+              (question_list, question, index) => {
+                if (index !== question_index) {
+                  question_list.push(question);
+                }
+                return question_list;
+              },
+              []
+            )
+          }
+        }
+      };
+    // return state
 
     default:
       return state;

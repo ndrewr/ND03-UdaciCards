@@ -45,20 +45,6 @@ export default class Card extends Component {
 
     animationSettings.toValue = this.value >= 90 ? 0 : 180;
     Animated.spring(this.animatedValue, animationSettings).start();
-
-    // if (this.value >= 90) {
-    //   Animated.spring(this.animatedValue, {
-    //     toValue: 0,
-    //     friction: 8,
-    //     tension: 10
-    //   }).start();
-    // } else {
-    //   Animated.spring(this.animatedValue, {
-    //     toValue: 180,
-    //     friction: 8,
-    //     tension: 10
-    //   }).start();
-    // }
   }
 
   render() {

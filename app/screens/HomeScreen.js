@@ -69,7 +69,6 @@ class ListEditItem extends Component {
   }
 }
 
-// function HomeScreen ({ decks, navigation }) {
 class HomeScreen extends Component {
   state = {
     editMode: false
@@ -91,7 +90,6 @@ class HomeScreen extends Component {
     const ListNavItem = ({ item: deck }) => {
       const gotoDeck = () =>
         navigation.navigate('DeckScreen', { deck_key: deck.key });
-      // const removeDeck = () => console.log('deleting this deck...', deck.title)
 
       return (
         <TouchableOpacity onPress={gotoDeck} style={styles.list_item}>

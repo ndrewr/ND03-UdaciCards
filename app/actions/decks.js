@@ -61,10 +61,23 @@ export function addQuestion({ deck_title, answer_text, question_text }) {
   };
 }
 
+export function removeQuestion(deck_title, question_index) {
+  console.log('removing question from deck: ', deck_title, question_index);
+
+  // removeDeckByTitle(deck_title);
+
+  return {
+    type: actions.REMOVE_QUESTION,
+    target: {
+      deck_title,
+      question_index
+    }
+  };
+}
+
 export function removeDeck(deck_title) {
   console.log('removing deck: ', deck_title);
 
-  // addCardToDeck(deck_title, new_card)
   removeDeckByTitle(deck_title);
 
   return {
