@@ -54,7 +54,7 @@ export default (default_data = {
       }
     ]
   },
-  NumbersinSpanish: {
+  NumbersInSpanish: {
     title: 'Numbers in Spanish!',
     questions: [
       {
@@ -99,7 +99,7 @@ export default (default_data = {
       }
     ]
   },
-  AnimalsinSpanish: {
+  AnimalsInSpanish: {
     title: 'Animals in Spanish!',
     questions: []
   },
@@ -111,7 +111,7 @@ export default (default_data = {
     title: 'Identify this Pokemon',
     questions: []
   },
-  RandomTriviaforFun: {
+  RandomTriviaForFun: {
     title: 'Random Trivia for Fun!',
     questions: []
   }

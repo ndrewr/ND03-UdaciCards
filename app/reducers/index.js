@@ -4,7 +4,54 @@ import * as actions from '../actions/action_types';
 
 import { formatDeckTitle } from '../utils/helpers';
 
-function entries(state = { decks: {} }, action) {
+function removeDeckFromState(decks, deck_title) {
+  const decks_copy = { ...decks };
+  const deck_key = formatDeckTitle(deck_title);
+
+  decks_copy[deck_key] = undefined;
+  delete decks_copy[deck_key];
+
+  return decks_copy;
+}
+
+function addQuestionToState(decks, deck_title, new_card) {
+  const deck_key = formatDeckTitle(deck_title);
+  const updated_deck = {
+    title: deck_title,
+    questions: [...decks[deck_key].questions, new_card]
+  };
+
+  return {
+    ...decks,
+    [deck_key]: updated_deck
+  };
+}
+
+function removeQuestionFromState(decks, deck_title, question_index) {
+  const deck_key = formatDeckTitle(deck_title);
+  const target_deck = decks[deck_key];
+  const updated_deck = {
+    title: deck_title,
+    questions: target_deck.questions.reduce(
+      (question_list, question, index) => {
+        if (index !== question_index) {
+          question_list.push(question);
+        }
+        return question_list;
+      },
+      []
+    )
+  };
+
+  console.log('modified deck after removing question: ', updated_deck);
+
+  return {
+    ...decks
+    // [deck_key]: updated_deck,
+  };
+}
+
+function reducer(state = { decks: {} }, action) {
   console.log('REDUCER: ', action.type, action);
 
   switch (action.type) {
@@ -24,71 +71,27 @@ function entries(state = { decks: {} }, action) {
       };
 
     case actions.REMOVE_DECK:
-      let decks_copy = { ...state.decks };
-      let target_deck = decks_copy[formatDeckTitle(action.deck_title)];
-
-      if (target_deck) {
-        delete decks_copy[formatDeckTitle(action.deck_title)];
-      }
-
       return {
-        decks: decks_copy
+        decks: removeDeckFromState(state.decks, action.deck_title)
       };
 
     case actions.ADD_QUESTION:
-      let { target_deck: { title, card } } = action;
-      let decks = state.decks;
-      let deck_key = formatDeckTitle(title);
-      console.log('adding question to...', title, decks);
-      let current_questions = decks[deck_key].questions;
-      let updated_deck = {
-        title,
-        questions: [...current_questions, card]
-      };
+      const { target_deck: { title, card } } = action;
 
       return {
-        decks: {
-          ...decks,
-          [deck_key]: updated_deck
-        }
+        decks: addQuestionToState(state.decks, title, card)
       };
 
     case actions.REMOVE_QUESTION:
       let { deck_title, question_index } = action.target;
-      // let deck_key = formatDeckTitle(deck_title)
-      let deck = state.decks[formatDeckTitle(deck_title)];
-      // let updated_deck = {
-      //   ...deck,
-      //   questions: deck.questions.reduce((question_list, question, index) => {
-      //     if (index !== question_index) {
-      //       question_list.push(question)
-      //     }
-      //     return question_list
-      //   }, [])
-      // }
 
       return {
-        decks: {
-          ...state.decks,
-          [formatDeckTitle(deck_title)]: {
-            ...deck,
-            questions: deck.questions.reduce(
-              (question_list, question, index) => {
-                if (index !== question_index) {
-                  question_list.push(question);
-                }
-                return question_list;
-              },
-              []
-            )
-          }
-        }
+        decks: removeQuestionFromState(state.decks, deck_title, question_index)
       };
-    // return state
 
     default:
       return state;
   }
 }
 
-export default entries;
+export default reducer;

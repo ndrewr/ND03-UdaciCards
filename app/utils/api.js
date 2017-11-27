@@ -6,6 +6,11 @@ import { formatDeckTitle } from './helpers';
 
 const DECKLIST_STORAGE_KEY = 'udacicards:decklist';
 
+// temporary clear
+// AsyncStorage.multiRemove([DECKLIST_STORAGE_KEY], (err) => {
+//   if (err) console.log('error clearing local storage...')
+// });
+
 // return all of the decks along with their titles, questions, and answers.
 export async function getDecks() {
   try {
@@ -37,6 +42,9 @@ export async function getDeck(deck_id) {
 export async function removeDeckByTitle(title) {
   try {
     const decks = await getDecks(); // verify the results?
+
+    decks[formatDeckTitle(title)] = undefined;
+
     delete decks[formatDeckTitle(title)];
 
     AsyncStorage.setItem(DECKLIST_STORAGE_KEY, JSON.stringify(decks));
@@ -64,6 +72,7 @@ export async function addCardToDeck(title, card) {
     const decks = await getDecks();
     const target_deck = decks[deck_key];
     const updated_deck = { questions: [...target_deck.questions, card] }; // dont think I need to include "title" key here
+
     return AsyncStorage.mergeItem(
       DECKLIST_STORAGE_KEY,
       JSON.stringify({ [deck_key]: updated_deck })

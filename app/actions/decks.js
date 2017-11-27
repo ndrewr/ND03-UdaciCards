@@ -11,8 +11,6 @@ export function receiveDecks() {
   return async dispatch => {
     const decks = await getDecks();
 
-    // console.dir('results from getDecks...', decks)
-
     dispatch({
       type: actions.RECEIVE_DECKS,
       decks
@@ -25,8 +23,6 @@ export function createDeck(title) {
     try {
       const result = await saveDeckTitle(title);
 
-      // console.log('ACTION: creating new deck...', result)
-
       dispatch({
         type: actions.ADD_DECK,
         new_deck: {
@@ -35,19 +31,13 @@ export function createDeck(title) {
         }
       });
     } catch (error) {
-      // set notifiation that save failed?
+      // set notification that save failed?
       console.log('problem creating new deck...', error);
     }
   };
 }
 
 export function addQuestion({ deck_title, answer_text, question_text }) {
-  console.log(
-    'lets add this question to: ',
-    deck_title,
-    question_text,
-    answer_text
-  );
   const new_card = { question: question_text, answer: answer_text };
 
   addCardToDeck(deck_title, new_card);
@@ -63,7 +53,6 @@ export function addQuestion({ deck_title, answer_text, question_text }) {
 
 export function removeQuestion(deck_title, question_index) {
   console.log('removing question from deck: ', deck_title, question_index);
-
   // removeDeckByTitle(deck_title);
 
   return {
@@ -76,8 +65,6 @@ export function removeQuestion(deck_title, question_index) {
 }
 
 export function removeDeck(deck_title) {
-  console.log('removing deck: ', deck_title);
-
   removeDeckByTitle(deck_title);
 
   return {

@@ -23,11 +23,13 @@ class QuestionEditItem extends Component {
   removeQuestion = () => {
     const { question, onPress } = this.props;
     const { confirmed } = this.state;
-    // console.log('deleting this deck...', deck.title);
 
     if (confirmed) {
       // call delete dispatch
-      // onPress(deck.title);
+
+      // PROBLEM: how to reference the question to be deleted??? How to pass in index value?
+
+      // onPress();
       console.log('deleting...');
     }
 
@@ -108,15 +110,14 @@ class DeckScreen extends Component {
   };
 
   render() {
-    const { deck, deck_key, navigation } = this.props;
+    const { deck, deck_key, navigation, deleteQuestion } = this.props;
     const { editMode } = this.state;
+
+    const cb = () => console.log('delete q');
 
     const ListItem = editMode
       ? ({ item }) => (
-          <QuestionEditItem
-            question={item}
-            onPress={() => console.log('delete q')}
-          />
+          <QuestionEditItem question={item} onPress={deleteQuestion} />
         )
       : ({ item: question }) => <AccordionListItem question={question} />;
 
@@ -129,22 +130,24 @@ class DeckScreen extends Component {
             justifyContent: 'space-between'
           }}
         >
-          <View>
+          <View style={{ flex: 3 }}>
             <Text style={styles.header_text}>{deck.title}</Text>
             <Text style={styles.header_sub}>
               {`${deck.questions.length} questions`}
             </Text>
           </View>
-          <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'flex-end',
-              alignItems: 'center'
-            }}
-          >
-            <Text>Edit questions</Text>
-            <Switch onValueChange={this.toggleEditMode} value={editMode} />
-          </View>
+          {Boolean(deck.questions.length) && (
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'flex-end',
+                alignItems: 'center'
+              }}
+            >
+              <Text>Edit list</Text>
+              <Switch onValueChange={this.toggleEditMode} value={editMode} />
+            </View>
+          )}
         </View>
         {editMode && <Text>Now editing question list...</Text>}
         <FlatList
@@ -220,7 +223,6 @@ const styles = StyleSheet.create({
       fontWeight: '500'
     }
   }),
-
   list_item: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -258,4 +260,9 @@ const mapStateToProps = (state, props) => {
   };
 };
 
-export default connect(mapStateToProps, null)(DeckScreen);
+const mapDispatchToProps = dispatch => ({
+  deleteQuestion: (deck_title, question_index) =>
+    dispatch(removeQuestion(deck_title, question_index))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(DeckScreen);
