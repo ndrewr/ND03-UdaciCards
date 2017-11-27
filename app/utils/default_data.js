@@ -1,4 +1,4 @@
-export default default_data = {
+export default (default_data = {
   React: {
     title: 'React',
     questions: [
@@ -12,12 +12,13 @@ export default default_data = {
       },
       {
         question: 'What is Redux?',
-        answer: 'A library for managing the flow of data state in an application.'
+        answer:
+          'A library for managing the flow of data state in an application.'
       },
       {
         question: 'What is Functional Programming?',
         answer: 'That is a good question.'
-      },
+      }
     ]
   },
   JavaScript: {
@@ -25,7 +26,8 @@ export default default_data = {
     questions: [
       {
         question: 'What is a closure?',
-        answer: 'The combination of a function and the lexical environment within which that function was declared.'
+        answer:
+          'The combination of a function and the lexical environment within which that function was declared.'
       },
       {
         question: 'What is a monad?',
@@ -33,11 +35,13 @@ export default default_data = {
       },
       {
         question: 'What is a IIFE?',
-        answer: 'Abbreviation for Immediately Invoked Function Expression. A function that is defined and invoked inline.'
+        answer:
+          'Abbreviation for Immediately Invoked Function Expression. A function that is defined and invoked inline.'
       },
       {
         question: 'What is a ternary?',
-        answer: 'Special syntax for an inline "short-circuit" if/else expression ending in assignment to a variable.'
+        answer:
+          'Special syntax for an inline "short-circuit" if/else expression ending in assignment to a variable.'
       },
       {
         question: 'Tabs or spaces?',
@@ -45,11 +49,12 @@ export default default_data = {
       },
       {
         question: 'Does JavaScript have "classes"?',
-        answer: 'As of ES2015 specification (also known as ES6) language support for a "class" keyword was added to the recognized syntax.'
+        answer:
+          'As of ES2015 specification (also known as ES6) language support for a "class" keyword was added to the recognized syntax.'
       }
     ]
   },
-  Numero: {
+  NumbersinSpanish: {
     title: 'Numbers in Spanish!',
     questions: [
       {
@@ -94,20 +99,20 @@ export default default_data = {
       }
     ]
   },
-  Animales: {
+  AnimalsinSpanish: {
     title: 'Animals in Spanish!',
     questions: []
   },
-  Fruits: {
+  FruitsInJapanese: {
     title: 'Fruits in Japanese!',
     questions: []
   },
-  Pokemon: {
+  IdentifyThisPokemon: {
     title: 'Identify this Pokemon',
     questions: []
   },
-  Trivia: {
+  RandomTriviaforFun: {
     title: 'Random Trivia for Fun!',
     questions: []
   }
-}
+});

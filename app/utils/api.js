@@ -57,17 +57,20 @@ export function saveDeckTitle(title) {
 
 // take in two arguments, title and card, and will add the card to the list of questions for the deck with the associated title.
 export async function addCardToDeck(title, card) {
-  // fetch current deck? try/catch
-  const decks = await getDecks();
-
   const deck_key = formatDeckTitle(title);
-  const target_deck = decks[deck_key];
-  const updated_deck = { questions: [...target_deck.questions, card] }; // dont think I need to include "title" key here
 
-  return AsyncStorage.mergeItem(
-    DECKLIST_STORAGE_KEY,
-    JSON.stringify({ [deck_key]: updated_deck })
-  );
+  // fetch current deck? try/catch
+  try {
+    const decks = await getDecks();
+    const target_deck = decks[deck_key];
+    const updated_deck = { questions: [...target_deck.questions, card] }; // dont think I need to include "title" key here
+    return AsyncStorage.mergeItem(
+      DECKLIST_STORAGE_KEY,
+      JSON.stringify({ [deck_key]: updated_deck })
+    );
+  } catch (e) {
+    console.log('Error adding new question to deck: ', title, e);
+  }
 }
 
 // take in a deck title and  question index it from the question list

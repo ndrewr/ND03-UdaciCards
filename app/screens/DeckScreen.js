@@ -40,7 +40,7 @@ class QuestionEditItem extends Component {
 
     return (
       <TouchableOpacity onPress={this.removeQuestion} style={styles.list_item}>
-        <View>
+        <View style={{ flex: 3 }}>
           <Text style={styles.list_item_title}>{question.question}</Text>
         </View>
         <View
@@ -51,7 +51,7 @@ class QuestionEditItem extends Component {
           }}
         >
           {confirmed && (
-            <Text style={{ color: alarm, fontSize: 16, marginRight: 4 }}>
+            <Text style={{ color: alarm, fontSize: 14, marginRight: 4 }}>
               delete?
             </Text>
           )}
@@ -115,7 +115,7 @@ class DeckScreen extends Component {
       ? ({ item }) => (
           <QuestionEditItem
             question={item}
-            onPress={() => console.log('hi now delete')}
+            onPress={() => console.log('delete q')}
           />
         )
       : ({ item: question }) => <AccordionListItem question={question} />;
@@ -196,7 +196,7 @@ const styles = StyleSheet.create({
     marginRight: 10
   },
   list_container: {
-    paddingBottom: 30
+    marginBottom: 20
   },
   button: Platform.select({
     ios: {},
@@ -227,7 +227,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: white,
     borderRadius: Platform.OS === 'ios' ? 16 : 2,
-    padding: 20,
+    padding: 10,
     marginLeft: 10,
     marginRight: 10,
     marginTop: 17,
@@ -240,8 +240,8 @@ const styles = StyleSheet.create({
     }
   },
   list_item_title: {
-    fontSize: 20,
-    fontWeight: '600'
+    fontSize: 18,
+    fontWeight: '400'
   },
   list_item_sub: {
     fontSize: 16,

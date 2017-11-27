@@ -54,7 +54,7 @@ class ListEditItem extends Component {
           }}
         >
           {confirmed && (
-            <Text style={{ color: alarm, fontSize: 16, marginRight: 4 }}>
+            <Text style={{ color: alarm, fontSize: 14, marginRight: 4 }}>
               delete?
             </Text>
           )}
@@ -129,7 +129,11 @@ class HomeScreen extends Component {
           </View>
         </View>
         {editMode && <Text>Now editing list...</Text>}
-        <FlatList data={deck_list} renderItem={ListItem} />
+        <FlatList
+          data={deck_list}
+          renderItem={ListItem}
+          style={styles.list_container}
+        />
       </View>
     );
   }
@@ -138,7 +142,11 @@ class HomeScreen extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 10
+    padding: 10,
+    paddingBottom: 20
+  },
+  list_container: {
+    marginBottom: 20
   },
   list_item: {
     flexDirection: 'row',

@@ -37,8 +37,9 @@ function entries(state = { decks: {} }, action) {
 
     case actions.ADD_QUESTION:
       let { target_deck: { title, card } } = action;
-      let deck_key = formatDeckTitle(title);
       let decks = state.decks;
+      let deck_key = formatDeckTitle(title);
+      console.log('adding question to...', title, decks);
       let current_questions = decks[deck_key].questions;
       let updated_deck = {
         title,
