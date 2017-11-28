@@ -43,11 +43,9 @@ function removeQuestionFromState(decks, deck_title, question_index) {
     )
   };
 
-  console.log('modified deck after removing question: ', updated_deck);
-
   return {
-    ...decks
-    // [deck_key]: updated_deck,
+    ...decks,
+    [deck_key]: updated_deck
   };
 }
 
@@ -83,7 +81,7 @@ function reducer(state = { decks: {} }, action) {
       };
 
     case actions.REMOVE_QUESTION:
-      let { deck_title, question_index } = action.target;
+      const { deck_title, question_index } = action.target;
 
       return {
         decks: removeQuestionFromState(state.decks, deck_title, question_index)

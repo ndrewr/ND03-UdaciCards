@@ -31,11 +31,6 @@ class AddQuestionScreen extends Component {
     this.setState({ answer_text: text });
   };
 
-  dismissKeyboard() {
-    console.log('blur!');
-    Keyboard.dismiss();
-  }
-
   createQuestion = () => {
     const { deck_key, deck_title, addNewQuestion } = this.props;
     const { answer_text, question_text } = this.state;
@@ -58,7 +53,6 @@ class AddQuestionScreen extends Component {
             placeholder="My new question..."
             placeholderTextColor="dimgray"
             maxLength={120}
-            onBlur={this.dismissKeyboard}
             onChangeText={this.updateQuestionText}
             style={styles.input}
           />
@@ -69,7 +63,6 @@ class AddQuestionScreen extends Component {
             placeholder="The answer..."
             placeholderTextColor="dimgray"
             maxLength={300}
-            onBlur={this.dismissKeyboard}
             onChangeText={this.updateAnswerText}
             style={styles.input}
           />

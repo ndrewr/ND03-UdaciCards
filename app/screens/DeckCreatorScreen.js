@@ -32,7 +32,7 @@ class DeckCreatorScreen extends Component {
     if (title_text) {
       this.props.createNewDeck(title_text);
       Keyboard.dismiss();
-      this.props.navigation.navigate('Home');
+      this.props.navigation.goBack();
     }
   };
 

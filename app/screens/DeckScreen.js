@@ -10,10 +10,11 @@ import {
   View,
   Platform
 } from 'react-native';
-
 import { Ionicons } from '@expo/vector-icons';
 
 import { alarm, gray, purple, white } from '../utils/colors';
+
+import { removeQuestion } from '../actions/decks';
 
 class QuestionEditItem extends Component {
   state = {
@@ -21,16 +22,15 @@ class QuestionEditItem extends Component {
   };
 
   removeQuestion = () => {
-    const { question, onPress } = this.props;
+    const { index, question, onPress } = this.props;
     const { confirmed } = this.state;
 
     if (confirmed) {
       // call delete dispatch
 
       // PROBLEM: how to reference the question to be deleted??? How to pass in index value?
-
-      // onPress();
-      console.log('deleting...');
+      console.log('deleting...', index);
+      onPress(index);
     }
 
     this.setState({ confirmed: true });
@@ -113,13 +113,15 @@ class DeckScreen extends Component {
     const { deck, deck_key, navigation, deleteQuestion } = this.props;
     const { editMode } = this.state;
 
-    const cb = () => console.log('delete q');
-
-    const ListItem = editMode
-      ? ({ item }) => (
-          <QuestionEditItem question={item} onPress={deleteQuestion} />
-        )
-      : ({ item: question }) => <AccordionListItem question={question} />;
+    const ListItem = ({ item, index }) => {
+      const onPress = () => deleteQuestion(deck.title, index);
+      if (editMode) {
+        return (
+          <QuestionEditItem question={item} index={index} onPress={onPress} />
+        );
+      }
+      return <AccordionListItem question={item} />;
+    };
 
     return (
       <View style={styles.container}>

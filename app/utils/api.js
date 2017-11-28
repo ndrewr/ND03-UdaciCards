@@ -83,7 +83,9 @@ export async function addCardToDeck(title, card) {
 }
 
 // take in a deck title and  question index it from the question list
-export async function removeQuestion(title, question_index) {
+export async function removeQuestionByIndex(title, question_index) {
+  console.log('removing question from deck: ', title, question_index);
+
   try {
     const decks = await getDecks(); // verify the results?
     // delete decks[formatDeckTitle(title)];

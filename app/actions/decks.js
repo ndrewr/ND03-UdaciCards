@@ -4,6 +4,7 @@ import {
   addCardToDeck,
   getDecks,
   removeDeckByTitle,
+  removeQuestionByIndex,
   saveDeckTitle
 } from '../utils/api';
 
@@ -52,8 +53,7 @@ export function addQuestion({ deck_title, answer_text, question_text }) {
 }
 
 export function removeQuestion(deck_title, question_index) {
-  console.log('removing question from deck: ', deck_title, question_index);
-  // removeDeckByTitle(deck_title);
+  removeQuestionByIndex(deck_title, question_index);
 
   return {
     type: actions.REMOVE_QUESTION,
