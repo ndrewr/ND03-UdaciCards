@@ -63,6 +63,14 @@ class QuizScreen extends Component {
     }
   };
 
+  restartQuiz = () => {
+    this.setState(state => ({
+      correctCount: 0,
+      incorrectCount: 0,
+      questionNumber: 1
+    }));
+  };
+
   render() {
     const { deck, deck_key } = this.props;
     const { correctCount, incorrectCount, questionNumber } = this.state;
@@ -99,7 +107,7 @@ class QuizScreen extends Component {
 
     const ReportView = ({ correctCount, incorrectCount }) => {
       return (
-        <View style={styles.container}>
+        <View style={[styles.container, { justifyContent: 'space-between' }]}>
           <Text style={styles.header_text}>Done! Your results...</Text>
           <Text style={[styles.report_header, { backgroundColor: success }]}>
             Correct: {correctCount}
@@ -112,6 +120,7 @@ class QuizScreen extends Component {
             {Math.floor(correctCount / (correctCount + incorrectCount) * 100)} %
             success
           </Text>
+          <TextButton text="Restart!" onPress={this.restartQuiz} />
         </View>
       );
     };
