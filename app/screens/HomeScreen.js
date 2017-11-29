@@ -24,7 +24,6 @@ class ListEditItem extends Component {
   removeDeck = () => {
     const { deck, onPress } = this.props;
     const { confirmed } = this.state;
-    console.log('deleting this deck...', deck.title);
 
     if (confirmed) {
       // call delete dispatch

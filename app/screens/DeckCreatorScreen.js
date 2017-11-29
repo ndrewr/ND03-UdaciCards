@@ -12,6 +12,7 @@ import {
   Platform
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { NavigationActions } from 'react-navigation';
 
 import { alarm, gray, purple, white } from '../utils/colors';
 import { formatDeckTitle } from '../utils/helpers';
@@ -31,18 +32,33 @@ class DeckCreatorScreen extends Component {
   };
 
   createDeck = () => {
-    const { validateDeckTitle } = this.props;
+    const { createNewDeck, validateDeckTitle } = this.props;
     const { title_text } = this.state;
 
-    // is deck title already in use? If so show error text
-    if (!validateDeckTitle(title_text)) {
-      this.setState({ show_error: true });
-      return;
-    }
     if (title_text) {
-      this.props.createNewDeck(title_text);
+      // is deck title already in use? If so show error text
+      if (!validateDeckTitle(title_text)) {
+        this.setState({ show_error: true });
+        return;
+      }
+
+      // route action to Deck Detail screen for new deck; back btn will lead Home
+      const routeOnCreate = () => {
+        const routeAction = NavigationActions.reset({
+          index: 1,
+          actions: [
+            NavigationActions.navigate({ routeName: 'Home' }),
+            NavigationActions.navigate({
+              routeName: 'DeckScreen',
+              params: { deck_key: formatDeckTitle(title_text) }
+            })
+          ]
+        });
+        this.props.navigation.dispatch(routeAction);
+      };
+
+      createNewDeck(title_text, routeOnCreate);
       Keyboard.dismiss();
-      this.props.navigation.goBack();
     }
   };
 
@@ -118,7 +134,8 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = dispatch => ({
-  createNewDeck: new_deck => dispatch(createDeck(new_deck))
+  createNewDeck: (new_deck, onCreate) =>
+    dispatch(createDeck(new_deck, onCreate))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(DeckCreatorScreen);

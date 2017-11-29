@@ -21,7 +21,7 @@ export function receiveDecks() {
   };
 }
 
-export function createDeck(title) {
+export function createDeck(title, onCreate) {
   return async dispatch => {
     try {
       const result = await saveDeckTitle(title);
@@ -33,6 +33,11 @@ export function createDeck(title) {
           questions: []
         }
       });
+
+      // if callback exists, invoke after async create
+      if (onCreate) {
+        onCreate();
+      }
     } catch (error) {
       // set notification that save failed?
       console.log('problem creating new deck...', error);
