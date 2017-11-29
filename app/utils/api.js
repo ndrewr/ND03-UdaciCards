@@ -31,7 +31,7 @@ export async function getDecks() {
 // take in a single id argument and return the deck associated with that id.
 export async function getDeck(deck_id) {
   try {
-    const decks = await getDecks(); // verify the results?
+    const decks = await getDecks();
     return decks[deck_id];
   } catch (e) {
     console.log('There was an error fetching the deck with id: ', deck_id, e);
@@ -41,11 +41,11 @@ export async function getDeck(deck_id) {
 // take in a single title argument and remove it from the deck list
 export async function removeDeckByTitle(title) {
   try {
-    const decks = await getDecks(); // verify the results?
+    const decks = await getDecks();
+    const deck_key = formatDeckTitle(title);
 
-    decks[formatDeckTitle(title)] = undefined;
-
-    delete decks[formatDeckTitle(title)];
+    decks[deck_key] = undefined;
+    delete decks[deck_key];
 
     AsyncStorage.setItem(DECKLIST_STORAGE_KEY, JSON.stringify(decks));
   } catch (e) {
@@ -67,7 +67,6 @@ export function saveDeckTitle(title) {
 export async function addCardToDeck(title, card) {
   const deck_key = formatDeckTitle(title);
 
-  // fetch current deck? try/catch
   try {
     const decks = await getDecks();
     const target_deck = decks[deck_key];
@@ -82,37 +81,18 @@ export async function addCardToDeck(title, card) {
   }
 }
 
-// take in a deck title and  question index it from the question list
+// take in a deck title and question index to remove from the deck's question list
 export async function removeQuestionByIndex(title, question_index) {
-  console.log('removing question from deck: ', title, question_index);
+  const deck_key = formatDeckTitle(title);
 
   try {
-    const decks = await getDecks(); // verify the results?
-    // delete decks[formatDeckTitle(title)];
+    const decks = await getDecks();
+    const target_deck = decks[deck_key].questions;
 
-    // AsyncStorage.setItem(DECKLIST_STORAGE_KEY, JSON.stringify(decks));
+    target_deck.splice(question_index, 1);
+
+    AsyncStorage.setItem(DECKLIST_STORAGE_KEY, JSON.stringify(decks));
   } catch (e) {
     console.log('There was an error removing question from deck: ', title, e);
   }
 }
-
-// export function fetchCalendarResults () {
-//   return AsyncStorage.getItem(CALENDAR_STORAGE_KEY)
-//     .then(formatCalendarResults)
-// }
-
-// export function submitEntry ({ entry, key }) {
-//   return AsyncStorage.mergeItem(CALENDAR_STORAGE_KEY, JSON.stringify({
-//     [key]: entry
-//   }))
-// }
-
-// export function removeEntry (key) {
-//   return AsyncStorage.getItem(CALENDAR_STORAGE_KEY)
-//     .then((results) => {
-//       const data = JSON.parse(results)
-//       data[key] = undefined
-//       delete data[key]
-//       AsyncStorage.setItem(CALENDAR_STORAGE_KEY, JSON.stringify(data))
-//     })
-// }
