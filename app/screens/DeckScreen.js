@@ -160,13 +160,15 @@ class DeckScreen extends Component {
           renderItem={ListItem}
           style={styles.list_container}
         />
-        <TouchableOpacity
-          onPress={() => navigation.navigate('QuizScreen', { deck_key })}
-        >
-          <View style={styles.button}>
-            <Text style={styles.text}>Ok Quiz me.</Text>
-          </View>
-        </TouchableOpacity>
+        {Boolean(deck.questions.length) && (
+          <TouchableOpacity
+            onPress={() => navigation.navigate('QuizScreen', { deck_key })}
+          >
+            <View style={styles.button}>
+              <Text style={styles.text}>Ok Quiz me.</Text>
+            </View>
+          </TouchableOpacity>
+        )}
       </View>
     );
   }
