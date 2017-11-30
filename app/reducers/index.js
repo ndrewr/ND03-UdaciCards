@@ -10,8 +10,6 @@ import {
 } from '../utils/helpers';
 
 function reducer(state = { decks: {} }, action) {
-  // console.log('REDUCER: ', action.type, action);
-
   switch (action.type) {
     case actions.RECEIVE_DECKS:
       return {

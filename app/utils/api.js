@@ -70,7 +70,7 @@ export async function addCardToDeck(title, card) {
   try {
     const decks = await getDecks();
     const target_deck = decks[deck_key];
-    const updated_deck = { questions: [...target_deck.questions, card] }; // dont think I need to include "title" key here
+    const updated_deck = { questions: [...target_deck.questions, card] };
 
     return AsyncStorage.mergeItem(
       DECKLIST_STORAGE_KEY,

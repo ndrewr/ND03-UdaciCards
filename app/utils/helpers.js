@@ -1,4 +1,5 @@
 // utility functions
+
 import { AsyncStorage } from 'react-native';
 import { Notifications, Permissions } from 'expo';
 
@@ -14,6 +15,8 @@ export function formatDeckTitle(title) {
     .reduce((key_string, word) => key_string + capitalize(word), '')
     .replace(/[^\w\s]|_/g, '');
 }
+
+// Reducer state calc
 
 export function removeDeckFromState(decks, deck_title) {
   const decks_copy = { ...decks };
@@ -61,6 +64,7 @@ export function removeQuestionFromState(decks, deck_title, question_index) {
 }
 
 // Notifications
+// example src: github.com/udacity/reactnd-UdaciFitness-complete/tree/useLocalNotification
 
 export function clearLocalNotification() {
   return AsyncStorage.removeItem(NOTIFICATION_KEY).then(
@@ -70,9 +74,8 @@ export function clearLocalNotification() {
 
 function createNotification() {
   return {
-    title: 'Log your stats!',
-    body:
-      "👋 don't forget to practice today! Every one of us is our own beautiful process!",
+    title: 'Udacicards: Practice makes Perfect!',
+    body: "👋 don't forget to practice today!  Be even more awesome!",
     ios: {
       sound: true
     },
@@ -95,9 +98,11 @@ export function setLocalNotification() {
             Notifications.cancelAllScheduledNotificationsAsync();
 
             let tomorrow = new Date();
+
+            // set the notification to alert 4:30pm
             tomorrow.setDate(tomorrow.getDate() + 1);
-            tomorrow.setHours(20);
-            tomorrow.setMinutes(0);
+            tomorrow.setHours(16);
+            tomorrow.setMinutes(30);
 
             Notifications.scheduleLocalNotificationAsync(createNotification(), {
               time: tomorrow,

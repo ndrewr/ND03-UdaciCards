@@ -76,7 +76,7 @@ class QuizScreen extends Component {
     const { correctCount, incorrectCount, questionNumber } = this.state;
     const { deck, deck_key } = this.props;
 
-    console.log('check notification!', correctCount, incorrectCount);
+    // console.log('check notification!', correctCount, incorrectCount);
 
     // if quiz is done, update notification state
     if (correctCount + incorrectCount === deck.questions.length) {
