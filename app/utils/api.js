@@ -6,11 +6,6 @@ import { formatDeckTitle } from './helpers';
 
 const DECKLIST_STORAGE_KEY = 'udacicards:decklist';
 
-// temporary clear
-// AsyncStorage.multiRemove([DECKLIST_STORAGE_KEY], (err) => {
-//   if (err) console.log('error clearing local storage...')
-// });
-
 // return all of the decks along with their titles, questions, and answers.
 export async function getDecks() {
   try {
