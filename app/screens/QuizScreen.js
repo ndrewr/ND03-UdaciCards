@@ -23,6 +23,7 @@ import {
   pink,
   white
 } from '../utils/colors';
+import { clearLocalNotification, setLocalNotification } from '../utils/helpers';
 
 import IconButton from '../components/IconButton';
 import TextButton from '../components/TextButton';
@@ -37,29 +38,29 @@ class QuizScreen extends Component {
 
   onCorrect = () => {
     const { deck, deck_key } = this.props;
-    const { questionNumber } = this.state;
+    const { correctCount, questionNumber } = this.state;
 
     if (questionNumber < deck.questions.length) {
-      this.setState(state => ({
-        correctCount: state.correctCount + 1,
-        questionNumber: state.questionNumber + 1
-      }));
+      this.setState({
+        correctCount: correctCount + 1,
+        questionNumber: questionNumber + 1
+      });
     } else {
-      this.setState(state => ({ correctCount: state.correctCount + 1 }));
+      this.setState({ correctCount: correctCount + 1 });
     }
   };
 
   onIncorrect = () => {
     const { deck, deck_key } = this.props;
-    const { questionNumber } = this.state;
+    const { incorrectCount, questionNumber } = this.state;
 
     if (questionNumber < deck.questions.length) {
-      this.setState(state => ({
-        incorrectCount: state.incorrectCount + 1,
-        questionNumber: state.questionNumber + 1
-      }));
+      this.setState({
+        incorrectCount: incorrectCount + 1,
+        questionNumber: questionNumber + 1
+      });
     } else {
-      this.setState(state => ({ incorrectCount: state.incorrectCount + 1 }));
+      this.setState(state => ({ incorrectCount: incorrectCount + 1 }));
     }
   };
 
@@ -70,6 +71,23 @@ class QuizScreen extends Component {
       questionNumber: 1
     }));
   };
+
+  manageNotification = () => {
+    const { correctCount, incorrectCount, questionNumber } = this.state;
+    const { deck, deck_key } = this.props;
+
+    console.log('check notification!', correctCount, incorrectCount);
+
+    // if quiz is done, update notification state
+    if (correctCount + incorrectCount === deck.questions.length) {
+      console.log('hey the quiz is done! Set notification!');
+      clearLocalNotification().then(setLocalNotification);
+    }
+  };
+
+  componentDidUpdate() {
+    this.manageNotification();
+  }
 
   render() {
     const { deck, deck_key } = this.props;

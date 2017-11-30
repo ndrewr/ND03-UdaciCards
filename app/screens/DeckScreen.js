@@ -26,10 +26,7 @@ class QuestionEditItem extends Component {
     const { confirmed } = this.state;
 
     if (confirmed) {
-      // call delete dispatch
-
-      // PROBLEM: how to reference the question to be deleted??? How to pass in index value?
-      console.log('deleting...', index);
+      // dispatch delete question action
       onPress(index);
     }
 
