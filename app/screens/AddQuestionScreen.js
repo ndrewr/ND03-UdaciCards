@@ -1,16 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {
-  Button,
-  FlatList,
   Keyboard,
   KeyboardAvoidingView,
   StyleSheet,
   Text,
   TextInput,
-  TouchableOpacity,
-  View,
-  Platform
+  View
 } from 'react-native';
 
 import { addQuestion } from '../actions/decks';
@@ -62,7 +58,7 @@ class AddQuestionScreen extends Component {
           <TextInput
             placeholder="The answer..."
             placeholderTextColor="dimgray"
-            maxLength={300}
+            maxLength={240}
             onChangeText={this.updateAnswerText}
             style={styles.input}
           />

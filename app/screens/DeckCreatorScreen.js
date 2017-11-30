@@ -1,20 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import {
-  Button,
-  FlatList,
-  Keyboard,
-  StyleSheet,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
-  Platform
-} from 'react-native';
+import { Keyboard, StyleSheet, Text, TextInput, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { NavigationActions } from 'react-navigation';
 
-import { alarm, gray, purple, white } from '../utils/colors';
+import { alarm } from '../utils/colors';
 import { formatDeckTitle } from '../utils/helpers';
 
 import { createDeck } from '../actions/decks';
@@ -66,7 +56,10 @@ class DeckCreatorScreen extends Component {
     const { show_error } = this.state;
     const errorVisibility = [styles.error_section];
 
-    if (show_error) errorVisibility.push({ opacity: 1 });
+    // display error message if invalid deck name was entered
+    if (show_error) {
+      errorVisibility.push({ opacity: 1 });
+    }
 
     return (
       <View style={styles.container}>

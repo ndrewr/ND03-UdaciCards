@@ -3,14 +3,10 @@ import {
   StyleSheet,
   Text,
   TouchableHighlight,
-  TouchableNativeFeedback,
-  TouchableOpacity,
   View,
   Platform
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-
-import { blue, lightPurp, orange, purple, white } from '../utils/colors';
 
 export default function IconButton({
   customStyles = {},

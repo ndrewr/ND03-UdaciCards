@@ -13,7 +13,7 @@ import DeckScreen from './screens/DeckScreen';
 import HomeScreen from './screens/HomeScreen';
 
 import AppNav from './components/AppNav';
-import UdaciStatusBar from './components/UdaciStatusBar';
+import StatusBar from './components/StatusBar';
 
 export default class AppRoot extends React.Component {
   componentDidMount() {
@@ -24,7 +24,7 @@ export default class AppRoot extends React.Component {
     return (
       <Provider store={configureStore()}>
         <View style={{ flex: 1 }}>
-          <UdaciStatusBar backgroundColor={purple} barStyle="light-content" />
+          <StatusBar backgroundColor={purple} barStyle="light-content" />
           <AppNav />
         </View>
       </Provider>

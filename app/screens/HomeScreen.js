@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {
-  Button,
   FlatList,
   StyleSheet,
   Switch,
@@ -12,7 +11,7 @@ import {
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
-import { alarm, gray, purple, white } from '../utils/colors';
+import { alarm, gray, white } from '../utils/colors';
 
 import { removeDeck } from '../actions/decks';
 
@@ -45,17 +44,9 @@ class ListEditItem extends Component {
             {`${deck.questions.length} questions`}
           </Text>
         </View>
-        <View
-          style={{
-            flexDirection: 'row',
-            alignItems: 'center',
-            justifyContent: 'flex-end'
-          }}
-        >
+        <View style={styles.toolbar_item_container}>
           {confirmed && (
-            <Text style={{ color: alarm, fontSize: 14, marginRight: 4 }}>
-              delete?
-            </Text>
+            <Text style={styles.list_item_confirm_label}>delete?</Text>
           )}
           <Ionicons
             name="md-remove-circle"
@@ -108,21 +99,9 @@ class HomeScreen extends Component {
 
     return (
       <View style={styles.container}>
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            alignItems: 'center'
-          }}
-        >
+        <View style={styles.toolbar_container}>
           <Text>Choose a deck, any deck!</Text>
-          <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'flex-end',
-              alignItems: 'center'
-            }}
-          >
+          <View style={styles.toolbar_item_container}>
             <Text>Edit list</Text>
             <Switch onValueChange={this.toggleEditMode} value={editMode} />
           </View>
@@ -172,6 +151,21 @@ const styles = StyleSheet.create({
   list_item_sub: {
     fontSize: 16,
     color: gray
+  },
+  toolbar_container: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between'
+  },
+  toolbar_item_container: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'flex-end'
+  },
+  list_item_confirm_label: {
+    color: alarm,
+    fontSize: 14,
+    marginRight: 4
   }
 });
 

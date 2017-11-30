@@ -1,28 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import {
-  Button,
-  FlatList,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-  Platform
-} from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
-import {
-  alarm,
-  success,
-  info,
-  blue,
-  lightPurp,
-  orange,
-  purple,
-  red,
-  pink,
-  white
-} from '../utils/colors';
+import { alarm, success, info } from '../utils/colors';
 import { clearLocalNotification, setLocalNotification } from '../utils/helpers';
 
 import IconButton from '../components/IconButton';

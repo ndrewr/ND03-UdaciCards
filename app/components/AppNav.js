@@ -1,23 +1,7 @@
 import React from 'react';
-import {
-  Button,
-  Text,
-  TouchableNativeFeedback,
-  TouchableOpacity,
-  View,
-  Platform
-} from 'react-native';
 import { StackNavigator } from 'react-navigation';
 
-import {
-  blue,
-  lightPurp,
-  orange,
-  purple,
-  red,
-  pink,
-  white
-} from '../utils/colors';
+import { blue, lightPurp, orange, purple, red, white } from '../utils/colors';
 
 import AddQuestionScreen from '../screens/AddQuestionScreen';
 import DeckCreatorScreen from '../screens/DeckCreatorScreen';

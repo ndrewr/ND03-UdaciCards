@@ -8,8 +8,6 @@ import {
   Platform
 } from 'react-native';
 
-import { blue, lightPurp, orange, purple, white } from '../utils/colors';
-
 export default function TextButton({
   children,
   customStyles = {},

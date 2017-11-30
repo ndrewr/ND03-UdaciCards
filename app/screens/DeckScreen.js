@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {
-  Button,
   FlatList,
   StyleSheet,
   Switch,
@@ -12,7 +11,7 @@ import {
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
-import { alarm, gray, purple, white } from '../utils/colors';
+import { alarm, gray, white } from '../utils/colors';
 
 import { removeQuestion } from '../actions/decks';
 
@@ -42,17 +41,9 @@ class QuestionEditItem extends Component {
         <View style={{ flex: 3 }}>
           <Text style={styles.list_item_title}>{question.question}</Text>
         </View>
-        <View
-          style={{
-            flexDirection: 'row',
-            alignItems: 'center',
-            justifyContent: 'flex-end'
-          }}
-        >
+        <View style={styles.toolbar_item_container}>
           {confirmed && (
-            <Text style={{ color: alarm, fontSize: 14, marginRight: 4 }}>
-              delete?
-            </Text>
+            <Text style={styles.question_item_confirm_label}>delete?</Text>
           )}
           <Ionicons
             name="md-remove-circle"
@@ -122,13 +113,7 @@ class DeckScreen extends Component {
 
     return (
       <View style={styles.container}>
-        <View
-          style={{
-            flexDirection: 'row',
-            alignItems: 'center',
-            justifyContent: 'space-between'
-          }}
-        >
+        <View style={styles.toolbar_container}>
           <View style={{ flex: 3 }}>
             <Text style={styles.header_text}>{deck.title}</Text>
             <Text style={styles.header_sub}>
@@ -136,13 +121,7 @@ class DeckScreen extends Component {
             </Text>
           </View>
           {Boolean(deck.questions.length) && (
-            <View
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'flex-end',
-                alignItems: 'center'
-              }}
-            >
+            <View style={styles.toolbar_item_container}>
               <Text>Edit list</Text>
               <Switch onValueChange={this.toggleEditMode} value={editMode} />
             </View>
@@ -218,7 +197,7 @@ const styles = StyleSheet.create({
       fontSize: 18
     },
     android: {
-      color: 'white',
+      color: white,
       textAlign: 'center',
       padding: 8,
       fontWeight: '500'
@@ -249,6 +228,21 @@ const styles = StyleSheet.create({
   list_item_sub: {
     fontSize: 16,
     color: gray
+  },
+  toolbar_container: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between'
+  },
+  toolbar_item_container: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'flex-end'
+  },
+  question_item_confirm_label: {
+    color: alarm,
+    fontSize: 14,
+    marginRight: 4
   }
 });
 

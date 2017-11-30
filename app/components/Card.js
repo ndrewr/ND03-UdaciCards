@@ -3,11 +3,11 @@
 
 import React, { Component } from 'react';
 import {
+  Animated,
   StyleSheet,
   Text,
-  View,
   TouchableOpacity,
-  Animated
+  View
 } from 'react-native';
 
 export default class Card extends Component {
