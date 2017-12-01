@@ -11,6 +11,10 @@ import {
 } from 'react-native';
 
 export default class Card extends Component {
+  state = {
+    flipped: false
+  };
+
   componentWillMount() {
     this.animatedValue = new Animated.Value(0);
     this.value = 0;
@@ -37,6 +41,17 @@ export default class Card extends Component {
       outputRange: [1, 0]
     });
   }
+
+  componentWillReceiveProps(nextProps) {
+    // make sure to show question side of card when changing questions
+    if (
+      nextProps.question.question !== this.props.question.question &&
+      this.state.flipped
+    ) {
+      this.flipCard();
+    }
+  }
+
   flipCard() {
     const animationSettings = {
       friction: 8,
@@ -45,6 +60,8 @@ export default class Card extends Component {
 
     animationSettings.toValue = this.value >= 90 ? 0 : 180;
     Animated.spring(this.animatedValue, animationSettings).start();
+
+    this.setState(state => ({ flipped: !state.flipped }));
   }
 
   render() {

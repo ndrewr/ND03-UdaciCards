@@ -1,13 +1,11 @@
 # Udacicards
 
 A project built in fulfillment of Udacity's React Developer nanodegree program.
-UdaciCards allows users to study collections of flashcards. The app will allow users to create different categories of flashcards called "decks", add flashcards to those decks, then take quizzes on those decks.
+UdaciCards allows users to study collections of flashcards. The app will allow users to create different categories of flashcards called "decks", add flashcards to those decks, then take quizzes using those decks.
 
-Uses React Native in combo with Redux.
+Uses React Native in combo with Expo and Redux.
 
-Bootstrapped with [create-react-app](https://github.com/facebookincubator/create-react-app).
-
-Based on [this project template](https://github.com/udacity/reactnd-project-readable-starter).
+Bootstrapped with [create-react-native-app](https://github.com/react-community/create-react-native-app).
 
 
 ### Prerequisites
@@ -15,7 +13,7 @@ Based on [this project template](https://github.com/udacity/reactnd-project-read
 Running this project requires [Node](https://nodejs.org/en/). Optionally, [Yarn](https://code.facebook.com/posts/1840075619545360) package manager can be installed as well.
 
 
-### Installing and Running *IMPORTANT*
+### Installing and Running
 
 Clone the repo and run the command `yarn` or `npm install`.
 (NOTE: development was done using Yarn but either should work)
@@ -47,6 +45,10 @@ Unless modified in `server/config.js` server will use port 5001
 [Redux Real World Example](https://github.com/reactjs/redux/tree/master/examples/real-world)
 
 *and obligatory StackOverflow / Google mention*
+
+// based off example from codedaily.com | codedaily.io/screencasts/12/Create-a-Flip-Card-Animation-with-React-Native
+// combined w/ android bug fixes detailed at github.com/facebook/react-native/issues/1973#issuecomment-262059217
+
 
 
 ## Authors
