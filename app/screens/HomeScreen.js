@@ -100,18 +100,25 @@ class HomeScreen extends Component {
     return (
       <View style={styles.container}>
         <View style={styles.toolbar_container}>
-          <Text>Choose a deck, any deck!</Text>
+          <View>
+            <Text style={styles.toolbar_item_heading}>
+              Choose a deck, any deck!
+            </Text>
+            {editMode && (
+              <Text style={{ color: alarm }}>Editing deck list...</Text>
+            )}
+          </View>
           <View style={styles.toolbar_item_container}>
-            <Text>Edit list</Text>
+            <Text style={{ fontSize: 12, marginRight: 4 }}>Edit</Text>
             <Switch onValueChange={this.toggleEditMode} value={editMode} />
           </View>
         </View>
-        {editMode && <Text>Now editing list...</Text>}
         <FlatList
           data={deck_list}
           renderItem={ListItem}
           style={styles.list_container}
         />
+        <Text style={styles.footer}>{deck_list.length} decks available</Text>
       </View>
     );
   }
@@ -120,8 +127,7 @@ class HomeScreen extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 10,
-    paddingBottom: 20
+    padding: 10
   },
   list_container: {
     marginBottom: 20
@@ -166,6 +172,14 @@ const styles = StyleSheet.create({
     color: alarm,
     fontSize: 14,
     marginRight: 4
+  },
+  toolbar_item_heading: {
+    fontWeight: 'bold'
+  },
+  footer: {
+    fontSize: 14,
+    color: gray,
+    textAlign: 'center'
   }
 });
 
