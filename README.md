@@ -1,7 +1,7 @@
 # Udacicards
 
 A project built in fulfillment of Udacity's React Developer nanodegree program.
-UdaciCards allows users to study collections of flashcards. The app will allow users to create different categories of flashcards called "decks", add flashcards to those decks, then take quizzes using those decks.
+UdaciCards allows users to study collections of flashcards. The app will allow users to create different categories of flashcards called "decks", add flashcards to those decks, then take quizzes using those decks. A basic notification system can remind the User to practice every afternoon.
 
 Uses React Native in combo with Expo and Redux.
 
@@ -25,38 +25,40 @@ or
 yarn start
 ```
 
-The page should open automatically in browser. Else go to `localhost:3000` in your browser to view the app.
-
-Unless modified in `server/config.js` server will use port 5001
+This should run `expo` providing means to launch various app simulation environments (with usage details listed on-screen.)
 
 
-## Built With
+### Built With
 
 * [React](https://facebook.github.io/react/)
-* [React-SemanticUI](https://github.com/Semantic-Org/Semantic-UI-React)
+* [Redux](https://redux.js.org/)
+* [Create React Native App](https://github.com/react-community/create-react-native-app)
+* [React Navigation](https://github.com/react-community/react-navigation)
 
 
-## Resource links
+### Resource links
 
-[Redux documentation](http://redux.js.org/)
+[Expo documentation](https://docs.expo.io/versions/latest/index.html)
 
-[Building a Simple CRUD App with React + Redux](http://www.thegreatcodeadventure.com/building-a-simple-crud-app-with-react-redux-part-1/#table-of-contents)
+[Redux documentation](https://redux.js.org/)
 
-[Redux Real World Example](https://github.com/reactjs/redux/tree/master/examples/real-world)
+[React Navigation documentation](https://reactnavigation.org/)
+
+[Flip Card animation](https://codedaily.io/screencasts/12/Create-a-Flip-Card-Animation-with-React-Native)
+
+[Android animation issues](https://github.com/facebook/react-native/issues/1973#issuecomment-262059217)
+
+[Udacifitness Example project](https://github.com/udacity/reactnd-UdaciFitness-complete)
 
 *and obligatory StackOverflow / Google mention*
 
-// based off example from codedaily.com | codedaily.io/screencasts/12/Create-a-Flip-Card-Animation-with-React-Native
-// combined w/ android bug fixes detailed at github.com/facebook/react-native/issues/1973#issuecomment-262059217
 
-
-
-## Authors
+### Authors
 
 * **Andrew R Chen** - *Initial work* - [UncleOptimus](https://github.com/uncleoptimus)
 
 
-## License
+### License
 
 This project is licensed under the MIT License
 
