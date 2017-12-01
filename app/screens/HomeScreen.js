@@ -105,7 +105,7 @@ class HomeScreen extends Component {
               Choose a deck, any deck!
             </Text>
             {editMode && (
-              <Text style={{ color: alarm }}>Editing deck list...</Text>
+              <Text style={{ color: alarm }}>Now editing deck list...</Text>
             )}
           </View>
           <View style={styles.toolbar_item_container}>

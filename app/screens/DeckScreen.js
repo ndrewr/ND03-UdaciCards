@@ -122,12 +122,14 @@ class DeckScreen extends Component {
           </View>
           {Boolean(deck.questions.length) && (
             <View style={styles.toolbar_item_container}>
-              <Text>Edit list</Text>
+              <Text style={{ fontSize: 12, marginRight: 4 }}>Edit</Text>
               <Switch onValueChange={this.toggleEditMode} value={editMode} />
             </View>
           )}
         </View>
-        {editMode && <Text>Now editing question list...</Text>}
+        {editMode && (
+          <Text style={{ color: alarm }}>Now editing question list...</Text>
+        )}
         <FlatList
           data={deck.questions.map((question, index) => ({
             ...question,
@@ -136,15 +138,16 @@ class DeckScreen extends Component {
           renderItem={ListItem}
           style={styles.list_container}
         />
-        {Boolean(deck.questions.length) && (
-          <TouchableOpacity
-            onPress={() => navigation.navigate('QuizScreen', { deck_key })}
-          >
-            <View style={styles.button}>
-              <Text style={styles.text}>Ok Quiz me.</Text>
-            </View>
-          </TouchableOpacity>
-        )}
+        {Boolean(deck.questions.length) &&
+          !editMode && (
+            <TouchableOpacity
+              onPress={() => navigation.navigate('QuizScreen', { deck_key })}
+            >
+              <View style={styles.button}>
+                <Text style={styles.text}>Ok Quiz me.</Text>
+              </View>
+            </TouchableOpacity>
+          )}
       </View>
     );
   }
